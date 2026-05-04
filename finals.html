@@ -8,23 +8,22 @@
 </head>
 <body>
 
-<!-- Background decorations -->
+<!--Background Decor-->
 <div class="dot-grid"></div>
 <div id="toast-container"></div>
 
-<!-- ══════════════════════════════════════
-     NAVIGATION BAR
-══════════════════════════════════════ -->
+<!--Navigation Bar-->
 <nav id="app-nav">
   <span class="nav-logo">StudyFlow</span>
   <div class="nav-right">
     <span class="nav-level-pill" id="nav-level-pill">🌱 Lv.0 Newbie</span>
+    <button class="nav-level-pill" onclick="showSetup()">
+      &nbsp;Profile
+    </button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════
-     SCREEN 1 — HOME / DASHBOARD
-══════════════════════════════════════ -->
+<!-- 1st Screen - Dashboard -->>
 <div id="screen-home" class="screen active">
   <div class="screen-inner">
     <div class="card">
@@ -48,12 +47,12 @@
         </div>
       </div>
 
-      <!-- Streak banner -->
+      <!-- Para sa streak -->
       <div class="streak-banner">
         🔥 <span id="streak-text">Start your first session today!</span>
       </div>
 
-      <!-- Actions -->
+      <!-- Pilindutan -->
       <button class="btn btn-primary" onclick="showSetup()">
         ➕ &nbsp; Add New Session
       </button>
@@ -65,9 +64,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SCREEN 2 — SESSION SETUP
-══════════════════════════════════════ -->
+<!-- 2nd Screen - Set-up -->
 <div id="screen-setup" class="screen">
   <div class="screen-inner">
     <div class="card">
@@ -84,17 +81,17 @@
         </button>
       </div>
 
-      <!-- Academic subjects -->
+      //Academic subjects
       <div id="academic-subjects" class="subject-grid">
-        <button class="subject-btn" onclick="selectSubject(this, 'Mathematics')">📐 Math</button>
-        <button class="subject-btn" onclick="selectSubject(this, 'Science')">🔬 Science</button>
-        <button class="subject-btn" onclick="selectSubject(this, 'History')">📜 History</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'Mathematics')">📐 Calculus</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'Science')">🔬 Biology</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'History')">📜 Physics</button>
         <button class="subject-btn" onclick="selectSubject(this, 'English')">✍️ English</button>
         <button class="subject-btn" onclick="selectSubject(this, 'Filipino')">🇵🇭 Filipino</button>
         <button class="subject-btn" onclick="selectSubject(this, 'MAPEH')">🎵 MAPEH</button>
       </div>
 
-      <!-- Skill subjects -->
+      //Skill subjects
       <div id="skill-subjects" class="subject-grid" style="display:none;">
         <button class="subject-btn" onclick="selectSubject(this, 'Coding')">💻 Coding</button>
         <button class="subject-btn" onclick="selectSubject(this, 'Drawing')">🎨 Drawing</button>
@@ -106,7 +103,7 @@
 
       <hr class="divider" />
 
-      <!-- Custom subject -->
+      //Custom subject
       <div class="input-group">
         <label class="input-label">Or type a custom subject</label>
         <input
@@ -130,9 +127,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SCREEN 3 — TIMER (Active Work)
-══════════════════════════════════════ -->
+<!-- SCREEN 3 — TIMER (Active Work) -->
 <div id="screen-timer" class="screen">
   <div class="screen-inner">
     <div class="card">
@@ -183,9 +178,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SCREEN 4 — SUMMARY
-══════════════════════════════════════ -->
+<!-- SCREEN 4 — SUMMARY -->
 <div id="screen-summary" class="screen">
   <div class="screen-inner">
     <div class="card">
@@ -238,9 +231,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SCREEN 5 — HISTORY
-══════════════════════════════════════ -->
+<!-- SCREEN 5 — HISTORY -->
 <div id="screen-history" class="screen">
   <div class="screen-inner">
     <div class="card">
@@ -257,10 +248,8 @@
   </div><!-- /uml-page -->
 </div>
 
-<!-- ══════════════════════════════════════
-     COMPILED TypeScript → JavaScript
-══════════════════════════════════════ -->
-<script src="app.js"></script>
+<!-- COMPILED TypeScript → JavaScript -->
+<script src="finals.js"></script>
 
 </body>
 </html>
