@@ -19,8 +19,6 @@
   <span class="nav-logo">StudyFlow</span>
   <div class="nav-right">
     <span class="nav-level-pill" id="nav-level-pill">🌱 Lv.0 Newbie</span>
-    <button class="nav-btn" onclick="showHistory()">📜 History</button>
-    <button class="nav-btn" onclick="showUML()">📐 UML Diagram</button>
   </div>
 </nav>
 
@@ -36,7 +34,6 @@
         <div style="font-size:3rem; margin-bottom:0.75rem;">📚</div>
         <h1 class="logo">StudyFlow</h1>
         <p class="subtitle" style="margin-top:0.6rem; font-size:1rem;">
-          Your guided, OOP-powered study experience
         </p>
       </div>
 
@@ -62,9 +59,6 @@
       </button>
       <button class="btn btn-secondary" onclick="showHistory()">
         📜 &nbsp; View Session History
-      </button>
-      <button class="btn btn-ghost" onclick="showUML()">
-        📐 &nbsp; View UML Diagram
       </button>
 
     </div>
@@ -259,219 +253,6 @@
     </div>
   </div>
 </div>
-
-<!-- ══════════════════════════════════════
-     SCREEN 6 — UML DIAGRAM
-══════════════════════════════════════ -->
-<div id="screen-uml" class="screen" style="padding-top:0; justify-content:flex-start;">
-  <button class="btn btn-ghost uml-back" onclick="hideUML()">← Back</button>
-  <div class="uml-page">
-
-    <!-- Header -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">📐 UML Class Diagram — StudyFlow</div>
-      <p style="font-size:0.875rem; color:var(--muted);">
-        Demonstrates all 4 OOP pillars: <strong style="color:var(--text);">Abstraction</strong>,
-        <strong style="color:var(--text);">Encapsulation</strong>,
-        <strong style="color:var(--text);">Inheritance</strong>, and
-        <strong style="color:var(--text);">Polymorphism</strong>.
-      </p>
-    </div>
-
-    <!-- Abstract class -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">Abstract Class (Abstraction)</div>
-      <div class="uml-row" style="justify-content:center;">
-        <div class="uml-box" style="max-width:300px;">
-          <div class="uml-box-header abstract-h">«abstract» StudySession</div>
-          <div class="uml-box-section">
-            <div class="uml-lbl">Private Attributes (Encapsulation)</div>
-            <div class="uml-f prv">- subject: string</div>
-            <div class="uml-f prv">- startTime: Date | null</div>
-            <div class="uml-f prv">- endTime: Date | null</div>
-            <div class="uml-f prv">- elapsedSeconds: number</div>
-          </div>
-          <div class="uml-box-section">
-            <div class="uml-lbl">Public Methods</div>
-            <div class="uml-f pub">+ getSubject(): string</div>
-            <div class="uml-f pub">+ getElapsed(): number</div>
-            <div class="uml-f pub">+ setElapsed(s): void</div>
-            <div class="uml-f pub">+ start(): void</div>
-            <div class="uml-f pub">+ end(): void</div>
-          </div>
-          <div class="uml-box-section">
-            <div class="uml-lbl">Abstract Methods (must override)</div>
-            <div class="uml-f abs">~ getSessionType(): string</div>
-            <div class="uml-f abs">~ getSummary(): string</div>
-            <div class="uml-f abs">~ getMotivation(): string</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Parent classes -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">Parent Classes (Inheritance from StudySession)</div>
-      <div class="uml-row" style="justify-content:center; gap:3rem;">
-        <div class="uml-col">
-          <div class="uml-box">
-            <div class="uml-box-header parent-h">AcademicSession</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- subjectIcon: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getSubjectIcon(): string</div>
-              <div class="uml-f pub">+ getSessionType(): string</div>
-              <div class="uml-f pub">+ getSummary(): string</div>
-              <div class="uml-f pub">+ getMotivation(): string</div>
-            </div>
-          </div>
-        </div>
-        <div class="uml-col">
-          <div class="uml-box">
-            <div class="uml-box-header parent-h">SkillSession</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- skillLevel: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getSkillLevel(): string</div>
-              <div class="uml-f pub">+ setSkillLevel(): void</div>
-              <div class="uml-f pub">+ getSessionType(): string</div>
-              <div class="uml-f pub">+ getSummary(): string</div>
-              <div class="uml-f pub">+ getMotivation(): string</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Child classes -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">Child Classes (Polymorphism — each overrides getMotivation())</div>
-      <div class="uml-row" style="justify-content:center;">
-
-        <div class="uml-col">
-          <div style="font-size:0.75rem; color:var(--muted); text-align:center;">extends AcademicSession</div>
-          <div class="uml-box">
-            <div class="uml-box-header child-h">STEMSession</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- difficulty: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getDifficulty(): string</div>
-              <div class="uml-f pub" style="color:#ffb547;">↩ getMotivation(): string</div>
-            </div>
-          </div>
-          <div class="uml-box">
-            <div class="uml-box-header child-h">HumanitiesSession</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- theme: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getTheme(): string</div>
-              <div class="uml-f pub" style="color:#ffb547;">↩ getMotivation(): string</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="uml-col">
-          <div style="font-size:0.75rem; color:var(--muted); text-align:center;">extends SkillSession</div>
-          <div class="uml-box">
-            <div class="uml-box-header child-h">TechnicalSkill</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- tool: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getTool(): string</div>
-              <div class="uml-f pub" style="color:#ffb547;">↩ getMotivation(): string</div>
-            </div>
-          </div>
-          <div class="uml-box">
-            <div class="uml-box-header child-h">CreativeSkill</div>
-            <div class="uml-box-section">
-              <div class="uml-f prv">- medium: string</div>
-            </div>
-            <div class="uml-box-section">
-              <div class="uml-f pub">+ getMedium(): string</div>
-              <div class="uml-f pub" style="color:#ffb547;">↩ getMotivation(): string</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Support classes -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">Support Classes (Business Logic, DRY Principle)</div>
-      <div class="uml-row" style="justify-content:center; gap:1.5rem;">
-        <div class="uml-box" style="max-width:240px;">
-          <div class="uml-box-header manager-h">SessionManager</div>
-          <div class="uml-box-section">
-            <div class="uml-f prv">- sessions: StudySession[]</div>
-            <div class="uml-f prv">- activeSession: StudySession|null</div>
-          </div>
-          <div class="uml-box-section">
-            <div class="uml-f pub">+ addSession(s): void</div>
-            <div class="uml-f pub">+ finishActive(): void</div>
-            <div class="uml-f pub">+ getHistory(): StudySession[]</div>
-            <div class="uml-f pub">+ getActive(): StudySession|null</div>
-            <div class="uml-f pub">+ getTotalTime(): number</div>
-          </div>
-        </div>
-        <div class="uml-box" style="max-width:240px;">
-          <div class="uml-box-header manager-h">TimerController</div>
-          <div class="uml-box-section">
-            <div class="uml-f prv">- session: StudySession|null</div>
-            <div class="uml-f prv">- intervalId: number|null</div>
-            <div class="uml-f prv">- running: boolean</div>
-          </div>
-          <div class="uml-box-section">
-            <div class="uml-f pub">+ bind(s): void</div>
-            <div class="uml-f pub">+ start(): void</div>
-            <div class="uml-f pub">+ pause(): void</div>
-            <div class="uml-f pub">+ stop(): number</div>
-          </div>
-        </div>
-        <div class="uml-box" style="max-width:240px;">
-          <div class="uml-box-header manager-h">LevelSystem</div>
-          <div class="uml-box-section">
-            <div class="uml-f prv">- xp: number</div>
-            <div class="uml-f prv">- LEVELS: LevelDef[]</div>
-          </div>
-          <div class="uml-box-section">
-            <div class="uml-f pub">+ getXP(): number</div>
-            <div class="uml-f pub">+ getLevel(): number</div>
-            <div class="uml-f pub">+ getLevelTitle(): string</div>
-            <div class="uml-f pub">+ addXP(seconds): number</div>
-            <div class="uml-f pub">+ getProgressPercent(): number</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- OOP Pillars -->
-    <div class="uml-section-card">
-      <div class="uml-section-title">🧠 OOP Pillars Applied</div>
-      <div class="oop-grid">
-        <div class="oop-pill">
-          <div class="oop-pill-title" style="color:var(--accent);">🔒 Encapsulation</div>
-          <div class="oop-pill-body">All attributes are <code>private</code>. Data is only accessed through public getters and setters. The UI never touches raw fields directly.</div>
-        </div>
-        <div class="oop-pill">
-          <div class="oop-pill-title" style="color:var(--success);">🧬 Inheritance</div>
-          <div class="oop-pill-body"><code>StudySession</code> (abstract) → <code>AcademicSession / SkillSession</code> (parents) → 4 child classes. Each level inherits and extends the one above.</div>
-        </div>
-        <div class="oop-pill">
-          <div class="oop-pill-title" style="color:var(--accent2);">🎭 Polymorphism</div>
-          <div class="oop-pill-body">Every child class overrides <code>getMotivation()</code>. The timer calls the same method on any session object — but gets a different result based on its actual class.</div>
-        </div>
-        <div class="oop-pill">
-          <div class="oop-pill-title" style="color:var(--accent3);">🌫️ Abstraction</div>
-          <div class="oop-pill-body"><code>StudySession</code> is abstract and cannot be instantiated. It enforces a contract: all subclasses MUST implement <code>getSessionType()</code>, <code>getSummary()</code>, and <code>getMotivation()</code>.</div>
-        </div>
-      </div>
-    </div>
 
   </div><!-- /uml-page -->
 </div>
