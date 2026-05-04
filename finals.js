@@ -1,7 +1,3 @@
-// ============================================================
-//  app.ts — StudyFlow: OOP Study Session Tracker
-//  TypeScript source — compiled to app.js for the browser
-// ============================================================
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -26,9 +22,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-// ─────────────────────────────────────────────
 // XP & LEVEL SYSTEM  (standalone utility class)
-// ─────────────────────────────────────────────
 var LevelSystem = /** @class */ (function () {
     function LevelSystem(savedXP) {
         if (savedXP === void 0) { savedXP = 0; }
@@ -67,7 +61,7 @@ var LevelSystem = /** @class */ (function () {
         return Math.min(100, Math.round(((this.xp - prev) / (next - prev)) * 100));
     };
     LevelSystem.prototype.addXP = function (seconds) {
-        var gained = Math.floor(seconds / 10); // 1 XP per 10 seconds
+        var gained = Math.floor(seconds / 60); // 1 XP per 10 seconds
         var prevLevel = this.getLevel();
         this.xp += gained;
         var newLevel = this.getLevel();
@@ -86,10 +80,7 @@ var LevelSystem = /** @class */ (function () {
     ];
     return LevelSystem;
 }());
-// ─────────────────────────────────────────────
 // ABSTRACT CLASS — StudySession
-// Demonstrates: Abstraction + Encapsulation
-// ─────────────────────────────────────────────
 var StudySession = /** @class */ (function () {
     function StudySession(subject) {
         this.subject = subject;
@@ -97,34 +88,29 @@ var StudySession = /** @class */ (function () {
         this.endTime = null;
         this.elapsedSeconds = 0;
     }
-    // ── Getters (public interface for private data) ──
+    // Getters (public interface for private data)
     StudySession.prototype.getSubject = function () { return this.subject; };
     StudySession.prototype.getElapsed = function () { return this.elapsedSeconds; };
     StudySession.prototype.getStartTime = function () { return this.startTime; };
     StudySession.prototype.getEndTime = function () { return this.endTime; };
-    // ── Setters ──
+    // Setters
     StudySession.prototype.setElapsed = function (s) { this.elapsedSeconds = s; };
     StudySession.prototype.setSubject = function (s) { this.subject = s; };
-    // ── Concrete methods (shared behavior) ──
+    // Concrete methods (shared behavior)
     StudySession.prototype.start = function () { this.startTime = new Date(); };
     StudySession.prototype.end = function () { this.endTime = new Date(); };
     return StudySession;
 }());
-// ─────────────────────────────────────────────
 // PARENT CLASS 1 — AcademicSession
-// Demonstrates: Inheritance (extends StudySession)
-// ─────────────────────────────────────────────
 var AcademicSession = /** @class */ (function (_super) {
     __extends(AcademicSession, _super);
     function AcademicSession(subject, icon) {
         if (icon === void 0) { icon = "📘"; }
-        var _this = _super.call(this, subject) || this; // calls StudySession constructor
+        var _this = _super.call(this, subject) || this;
         _this.subjectIcon = icon;
         return _this;
     }
-    // Getter
     AcademicSession.prototype.getSubjectIcon = function () { return this.subjectIcon; };
-    // Override abstract methods
     AcademicSession.prototype.getSessionType = function () { return "Academic Session"; };
     AcademicSession.prototype.getSummary = function () {
         return "Studied ".concat(this.getSubject(), " for ").concat(formatTime(this.getElapsed()), ".");
@@ -134,10 +120,7 @@ var AcademicSession = /** @class */ (function (_super) {
     };
     return AcademicSession;
 }(StudySession));
-// ─────────────────────────────────────────────
 // PARENT CLASS 2 — SkillSession
-// Demonstrates: Inheritance (extends StudySession)
-// ─────────────────────────────────────────────
 var SkillSession = /** @class */ (function (_super) {
     __extends(SkillSession, _super);
     function SkillSession(subject, skillLevel) {
@@ -146,10 +129,8 @@ var SkillSession = /** @class */ (function (_super) {
         _this.skillLevel = skillLevel;
         return _this;
     }
-    // Getters & Setters
     SkillSession.prototype.getSkillLevel = function () { return this.skillLevel; };
     SkillSession.prototype.setSkillLevel = function (lvl) { this.skillLevel = lvl; };
-    // Override abstract methods
     SkillSession.prototype.getSessionType = function () { return "Skill Session"; };
     SkillSession.prototype.getSummary = function () {
         return "Practiced ".concat(this.getSubject(), " (").concat(this.skillLevel, ") for ").concat(formatTime(this.getElapsed()), ".");
@@ -159,10 +140,7 @@ var SkillSession = /** @class */ (function (_super) {
     };
     return SkillSession;
 }(StudySession));
-// ─────────────────────────────────────────────
 // CHILD CLASS 1 — STEMSession
-// Demonstrates: Inheritance + POLYMORPHISM (overrides getMotivation)
-// ─────────────────────────────────────────────
 var STEMSession = /** @class */ (function (_super) {
     __extends(STEMSession, _super);
     function STEMSession(subject, difficulty) {
@@ -173,7 +151,6 @@ var STEMSession = /** @class */ (function (_super) {
     }
     STEMSession.prototype.getDifficulty = function () { return this.difficulty; };
     STEMSession.prototype.setDifficulty = function (d) { this.difficulty = d; };
-    // POLYMORPHISM: overrides parent's getMotivation()
     STEMSession.prototype.getMotivation = function () {
         var msgs = [
             "Every equation solved is a victory! 🧪",
@@ -186,10 +163,7 @@ var STEMSession = /** @class */ (function (_super) {
     };
     return STEMSession;
 }(AcademicSession));
-// ─────────────────────────────────────────────
 // CHILD CLASS 2 — HumanitiesSession
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 var HumanitiesSession = /** @class */ (function (_super) {
     __extends(HumanitiesSession, _super);
     function HumanitiesSession(subject, theme) {
@@ -200,7 +174,6 @@ var HumanitiesSession = /** @class */ (function (_super) {
     }
     HumanitiesSession.prototype.getTheme = function () { return this.theme; };
     HumanitiesSession.prototype.setTheme = function (t) { this.theme = t; };
-    // POLYMORPHISM: overrides parent's getMotivation()
     HumanitiesSession.prototype.getMotivation = function () {
         var msgs = [
             "Words and history make us human. Keep reading! 📚",
@@ -213,10 +186,7 @@ var HumanitiesSession = /** @class */ (function (_super) {
     };
     return HumanitiesSession;
 }(AcademicSession));
-// ─────────────────────────────────────────────
 // CHILD CLASS 3 — TechnicalSkill
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 var TechnicalSkill = /** @class */ (function (_super) {
     __extends(TechnicalSkill, _super);
     function TechnicalSkill(subject, tool) {
@@ -227,7 +197,6 @@ var TechnicalSkill = /** @class */ (function (_super) {
     }
     TechnicalSkill.prototype.getTool = function () { return this.tool; };
     TechnicalSkill.prototype.setTool = function (t) { this.tool = t; };
-    // POLYMORPHISM: overrides parent's getMotivation()
     TechnicalSkill.prototype.getMotivation = function () {
         var msgs = [
             "Every bug fixed makes you a better dev! 💻",
@@ -240,10 +209,7 @@ var TechnicalSkill = /** @class */ (function (_super) {
     };
     return TechnicalSkill;
 }(SkillSession));
-// ─────────────────────────────────────────────
 // CHILD CLASS 4 — CreativeSkill
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 var CreativeSkill = /** @class */ (function (_super) {
     __extends(CreativeSkill, _super);
     function CreativeSkill(subject, medium) {
@@ -254,7 +220,6 @@ var CreativeSkill = /** @class */ (function (_super) {
     }
     CreativeSkill.prototype.getMedium = function () { return this.medium; };
     CreativeSkill.prototype.setMedium = function (m) { this.medium = m; };
-    // POLYMORPHISM: overrides parent's getMotivation()
     CreativeSkill.prototype.getMotivation = function () {
         var msgs = [
             "Creativity grows when you practice it daily! 🎨",
@@ -267,10 +232,7 @@ var CreativeSkill = /** @class */ (function (_super) {
     };
     return CreativeSkill;
 }(SkillSession));
-// ─────────────────────────────────────────────
 // SESSION MANAGER  (Business Logic — separated from UI)
-// Demonstrates: Encapsulation, DRY, SRP
-// ─────────────────────────────────────────────
 var SessionManager = /** @class */ (function () {
     function SessionManager() {
         this.sessions = [];
@@ -289,10 +251,7 @@ var SessionManager = /** @class */ (function () {
     };
     return SessionManager;
 }());
-// ─────────────────────────────────────────────
 // TIMER CONTROLLER  (Business Logic)
-// Demonstrates: Encapsulation, Separation of Concerns
-// ─────────────────────────────────────────────
 var TimerController = /** @class */ (function () {
     function TimerController(onTick, onMotivation) {
         this.session = null;
@@ -344,9 +303,7 @@ var TimerController = /** @class */ (function () {
     };
     return TimerController;
 }());
-// ─────────────────────────────────────────────
 // TOAST MANAGER  (UI Utility)
-// ─────────────────────────────────────────────
 var ToastManager = /** @class */ (function () {
     function ToastManager(containerId) {
         this.container = document.getElementById(containerId);
@@ -364,9 +321,7 @@ var ToastManager = /** @class */ (function () {
     };
     return ToastManager;
 }());
-// ─────────────────────────────────────────────
 // UTILITY FUNCTIONS  (DRY principle)
-// ─────────────────────────────────────────────
 function formatTime(seconds) {
     var m = Math.floor(seconds / 60);
     var s = seconds % 60;
@@ -402,9 +357,7 @@ function mapSubjectToClass(subject, type) {
         return new TechnicalSkill(subject);
     }
 }
-// ─────────────────────────────────────────────
 // APP STATE (singleton instances)
-// ─────────────────────────────────────────────
 var manager = new SessionManager();
 var levelSystem = new LevelSystem();
 var toast = new ToastManager('toast-container');
@@ -431,9 +384,7 @@ function (msg) {
         toast.show('💬 ' + msg, 4000);
     }, 400);
 });
-// ─────────────────────────────────────────────
 // SCREEN NAVIGATION  (UI Layer)
-// ─────────────────────────────────────────────
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(function (s) { return s.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
@@ -445,9 +396,7 @@ function showSetup() { resetSetup(); showScreen('screen-setup'); }
 function showHistory() { renderHistory(); showScreen('screen-history'); }
 function showUML() { showScreen('screen-uml'); }
 function hideUML() { showHome(); }
-// ─────────────────────────────────────────────
 // HOME UI
-// ─────────────────────────────────────────────
 function updateHomeUI() {
     var count = manager.getCount();
     var total = manager.getTotalTime();
@@ -477,9 +426,7 @@ function updateLevelUI() {
     if (navPill)
         navPill.textContent = "".concat(icon, " Lv.").concat(lv, " ").concat(title);
 }
-// ─────────────────────────────────────────────
 // SETUP SCREEN
-// ─────────────────────────────────────────────
 function switchType(type) {
     currentType = type;
     selectedSubject = '';
@@ -515,7 +462,7 @@ function resetSetup() {
 function startSession() {
     if (!selectedSubject)
         return;
-    // Factory: creates correct OOP subclass — Polymorphism in action
+    // Factory: gacreate correct OOP subclass — Polymorphism in act
     var session = mapSubjectToClass(selectedSubject, currentType);
     manager.addSession(session);
     timerCtrl.bind(session);
@@ -531,9 +478,7 @@ function startSession() {
     showScreen('screen-timer');
     toast.show("Let's go! 💪 Session ready.");
 }
-// ─────────────────────────────────────────────
 // TIMER SCREEN
-// ─────────────────────────────────────────────
 function timerStart() {
     timerCtrl.start();
     setTimerBtns(true, false, false);
@@ -593,9 +538,7 @@ function updateRing(elapsed) {
     var offset = max - Math.min((elapsed / 3600) * max, max);
     ring.style.strokeDashoffset = String(offset);
 }
-// ─────────────────────────────────────────────
 // HISTORY SCREEN
-// ─────────────────────────────────────────────
 function renderHistory() {
     var list = document.getElementById('history-list');
     var sessions = manager.getHistory().reverse();
@@ -605,9 +548,7 @@ function renderHistory() {
     }
     list.innerHTML = sessions.map(function (s) { return "\n    <div class=\"history-item\">\n      <div class=\"history-item-left\">\n        <div class=\"history-item-subject\">".concat(s.getSubject(), "</div>\n        <div class=\"history-item-type\">").concat(s.getSessionType(), "</div>\n      </div>\n      <div class=\"history-item-time\">").concat(formatTime(s.getElapsed()), "</div>\n    </div>\n  "); }).join('');
 }
-// ─────────────────────────────────────────────
 // INIT
-// ─────────────────────────────────────────────
 (function init() {
     showHome();
 })();

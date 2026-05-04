@@ -1,11 +1,4 @@
-// ============================================================
-//  app.ts — StudyFlow: OOP Study Session Tracker
-//  TypeScript source — compiled to app.js for the browser
-// ============================================================
-
-// ─────────────────────────────────────────────
 // INTERFACES  (Abstraction via contracts)
-// ─────────────────────────────────────────────
 interface ISession {
   getSessionType(): string;
   getSummary(): string;
@@ -18,9 +11,7 @@ interface ILevelable {
   getLevelTitle(): string;
 }
 
-// ─────────────────────────────────────────────
 // XP & LEVEL SYSTEM  (standalone utility class)
-// ─────────────────────────────────────────────
 class LevelSystem implements ILevelable {
   private xp: number;
   private static readonly LEVELS: { min: number; title: string; icon: string }[] = [
@@ -74,7 +65,7 @@ class LevelSystem implements ILevelable {
   }
 
   addXP(seconds: number): number {
-    const gained = Math.floor(seconds / 10); // 1 XP per 10 seconds
+    const gained = Math.floor(seconds / 60); // 1 XP per 10 seconds
     const prevLevel = this.getLevel();
     this.xp += gained;
     const newLevel = this.getLevel();
@@ -85,15 +76,12 @@ class LevelSystem implements ILevelable {
   setXP(val: number): void { this.xp = val; }
 }
 
-// ─────────────────────────────────────────────
 // ABSTRACT CLASS — StudySession
-// Demonstrates: Abstraction + Encapsulation
-// ─────────────────────────────────────────────
 abstract class StudySession implements ISession {
-  private subject: string;           // ENCAPSULATION: private
-  private startTime: Date | null;    // ENCAPSULATION: private
-  private endTime: Date | null;      // ENCAPSULATION: private
-  private elapsedSeconds: number;    // ENCAPSULATION: private
+  private subject: string;
+  private startTime: Date | null;
+  private endTime: Date | null;
+  private elapsedSeconds: number;
 
   constructor(subject: string) {
     this.subject        = subject;
@@ -102,42 +90,37 @@ abstract class StudySession implements ISession {
     this.elapsedSeconds = 0;
   }
 
-  // ── Getters (public interface for private data) ──
+  // Getters (public interface for private data)
   getSubject(): string         { return this.subject; }
   getElapsed(): number         { return this.elapsedSeconds; }
   getStartTime(): Date | null  { return this.startTime; }
   getEndTime(): Date | null    { return this.endTime; }
 
-  // ── Setters ──
+  // Setters
   setElapsed(s: number): void  { this.elapsedSeconds = s; }
   setSubject(s: string): void  { this.subject = s; }
 
-  // ── Concrete methods (shared behavior) ──
+  // Concrete methods (shared behavior)
   start(): void { this.startTime = new Date(); }
   end(): void   { this.endTime = new Date(); }
 
-  // ── ABSTRACT methods — child classes MUST implement ──
+  // ABSTRACT methods — child classes MUST implement
   abstract getSessionType(): string;
   abstract getSummary(): string;
   abstract getMotivation(): string;
 }
 
-// ─────────────────────────────────────────────
 // PARENT CLASS 1 — AcademicSession
-// Demonstrates: Inheritance (extends StudySession)
-// ─────────────────────────────────────────────
 class AcademicSession extends StudySession {
-  private subjectIcon: string;   // ENCAPSULATION: private
+  private subjectIcon: string;
 
   constructor(subject: string, icon: string = "📘") {
-    super(subject);   // calls StudySession constructor
+    super(subject);
     this.subjectIcon = icon;
   }
 
-  // Getter
   getSubjectIcon(): string { return this.subjectIcon; }
 
-  // Override abstract methods
   getSessionType(): string { return "Academic Session"; }
 
   getSummary(): string {
@@ -149,10 +132,7 @@ class AcademicSession extends StudySession {
   }
 }
 
-// ─────────────────────────────────────────────
 // PARENT CLASS 2 — SkillSession
-// Demonstrates: Inheritance (extends StudySession)
-// ─────────────────────────────────────────────
 class SkillSession extends StudySession {
   private skillLevel: string;   // ENCAPSULATION: private
 
@@ -161,11 +141,9 @@ class SkillSession extends StudySession {
     this.skillLevel = skillLevel;
   }
 
-  // Getters & Setters
   getSkillLevel(): string        { return this.skillLevel; }
   setSkillLevel(lvl: string): void { this.skillLevel = lvl; }
 
-  // Override abstract methods
   getSessionType(): string { return "Skill Session"; }
 
   getSummary(): string {
@@ -177,12 +155,9 @@ class SkillSession extends StudySession {
   }
 }
 
-// ─────────────────────────────────────────────
 // CHILD CLASS 1 — STEMSession
-// Demonstrates: Inheritance + POLYMORPHISM (overrides getMotivation)
-// ─────────────────────────────────────────────
 class STEMSession extends AcademicSession {
-  private difficulty: string;   // ENCAPSULATION: private
+  private difficulty: string;
 
   constructor(subject: string, difficulty: string = "Medium") {
     super(subject, "🔬");
@@ -192,7 +167,6 @@ class STEMSession extends AcademicSession {
   getDifficulty(): string         { return this.difficulty; }
   setDifficulty(d: string): void  { this.difficulty = d; }
 
-  // POLYMORPHISM: overrides parent's getMotivation()
   getMotivation(): string {
     const msgs = [
       "Every equation solved is a victory! 🧪",
@@ -205,12 +179,9 @@ class STEMSession extends AcademicSession {
   }
 }
 
-// ─────────────────────────────────────────────
 // CHILD CLASS 2 — HumanitiesSession
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 class HumanitiesSession extends AcademicSession {
-  private theme: string;   // ENCAPSULATION: private
+  private theme: string;
 
   constructor(subject: string, theme: string = "General") {
     super(subject, "📜");
@@ -220,7 +191,6 @@ class HumanitiesSession extends AcademicSession {
   getTheme(): string        { return this.theme; }
   setTheme(t: string): void { this.theme = t; }
 
-  // POLYMORPHISM: overrides parent's getMotivation()
   getMotivation(): string {
     const msgs = [
       "Words and history make us human. Keep reading! 📚",
@@ -233,12 +203,9 @@ class HumanitiesSession extends AcademicSession {
   }
 }
 
-// ─────────────────────────────────────────────
 // CHILD CLASS 3 — TechnicalSkill
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 class TechnicalSkill extends SkillSession {
-  private tool: string;   // ENCAPSULATION: private
+  private tool: string;
 
   constructor(subject: string, tool: string = "General") {
     super(subject, "Intermediate");
@@ -248,7 +215,6 @@ class TechnicalSkill extends SkillSession {
   getTool(): string        { return this.tool; }
   setTool(t: string): void { this.tool = t; }
 
-  // POLYMORPHISM: overrides parent's getMotivation()
   getMotivation(): string {
     const msgs = [
       "Every bug fixed makes you a better dev! 💻",
@@ -261,12 +227,9 @@ class TechnicalSkill extends SkillSession {
   }
 }
 
-// ─────────────────────────────────────────────
 // CHILD CLASS 4 — CreativeSkill
-// Demonstrates: Inheritance + POLYMORPHISM
-// ─────────────────────────────────────────────
 class CreativeSkill extends SkillSession {
-  private medium: string;   // ENCAPSULATION: private
+  private medium: string;
 
   constructor(subject: string, medium: string = "Mixed") {
     super(subject, "Explorer");
@@ -276,7 +239,6 @@ class CreativeSkill extends SkillSession {
   getMedium(): string        { return this.medium; }
   setMedium(m: string): void { this.medium = m; }
 
-  // POLYMORPHISM: overrides parent's getMotivation()
   getMotivation(): string {
     const msgs = [
       "Creativity grows when you practice it daily! 🎨",
@@ -289,13 +251,10 @@ class CreativeSkill extends SkillSession {
   }
 }
 
-// ─────────────────────────────────────────────
 // SESSION MANAGER  (Business Logic — separated from UI)
-// Demonstrates: Encapsulation, DRY, SRP
-// ─────────────────────────────────────────────
 class SessionManager {
-  private sessions: StudySession[];       // ENCAPSULATION: private
-  private activeSession: StudySession | null;   // ENCAPSULATION: private
+  private sessions: StudySession[];
+  private activeSession: StudySession | null;
 
   constructor() {
     this.sessions      = [];
@@ -317,10 +276,7 @@ class SessionManager {
   }
 }
 
-// ─────────────────────────────────────────────
 // TIMER CONTROLLER  (Business Logic)
-// Demonstrates: Encapsulation, Separation of Concerns
-// ─────────────────────────────────────────────
 class TimerController {
   private session: StudySession | null;
   private intervalId: number | null;
@@ -381,9 +337,7 @@ class TimerController {
   }
 }
 
-// ─────────────────────────────────────────────
 // TOAST MANAGER  (UI Utility)
-// ─────────────────────────────────────────────
 class ToastManager {
   private container: HTMLElement;
 
@@ -403,9 +357,7 @@ class ToastManager {
   }
 }
 
-// ─────────────────────────────────────────────
 // UTILITY FUNCTIONS  (DRY principle)
-// ─────────────────────────────────────────────
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -437,9 +389,7 @@ function mapSubjectToClass(subject: string, type: string): StudySession {
   }
 }
 
-// ─────────────────────────────────────────────
 // APP STATE (singleton instances)
-// ─────────────────────────────────────────────
 const manager     = new SessionManager();
 const levelSystem = new LevelSystem();
 const toast       = new ToastManager('toast-container');
@@ -470,9 +420,7 @@ const timerCtrl = new TimerController(
   }
 );
 
-// ─────────────────────────────────────────────
 // SCREEN NAVIGATION  (UI Layer)
-// ─────────────────────────────────────────────
 function showScreen(id: string): void {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   document.getElementById(id)!.classList.add('active');
@@ -486,9 +434,7 @@ function showHistory(): void { renderHistory(); showScreen('screen-history'); }
 function showUML(): void     { showScreen('screen-uml'); }
 function hideUML(): void     { showHome(); }
 
-// ─────────────────────────────────────────────
 // HOME UI
-// ─────────────────────────────────────────────
 function updateHomeUI(): void {
   const count = manager.getCount();
   const total = manager.getTotalTime();
@@ -518,9 +464,7 @@ function updateLevelUI(): void {
   if (navPill) navPill.textContent = `${icon} Lv.${lv} ${title}`;
 }
 
-// ─────────────────────────────────────────────
 // SETUP SCREEN
-// ─────────────────────────────────────────────
 function switchType(type: string): void {
   currentType = type;
   selectedSubject = '';
@@ -560,7 +504,7 @@ function resetSetup(): void {
 function startSession(): void {
   if (!selectedSubject) return;
 
-  // Factory: creates correct OOP subclass — Polymorphism in action
+  // Factory: gacreate correct OOP subclass — Polymorphism in act
   const session = mapSubjectToClass(selectedSubject, currentType);
   manager.addSession(session);
   timerCtrl.bind(session);
@@ -579,9 +523,7 @@ function startSession(): void {
   toast.show("Let's go! 💪 Session ready.");
 }
 
-// ─────────────────────────────────────────────
 // TIMER SCREEN
-// ─────────────────────────────────────────────
 function timerStart(): void {
   timerCtrl.start();
   setTimerBtns(true, false, false);
@@ -649,9 +591,7 @@ function updateRing(elapsed: number): void {
   ring.style.strokeDashoffset = String(offset);
 }
 
-// ─────────────────────────────────────────────
 // HISTORY SCREEN
-// ─────────────────────────────────────────────
 function renderHistory(): void {
   const list     = document.getElementById('history-list')!;
   const sessions = manager.getHistory().reverse();
@@ -672,9 +612,7 @@ function renderHistory(): void {
   `).join('');
 }
 
-// ─────────────────────────────────────────────
 // INIT
-// ─────────────────────────────────────────────
 (function init(): void {
   showHome();
 })();
