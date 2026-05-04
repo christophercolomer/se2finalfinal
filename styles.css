@@ -7,19 +7,20 @@
 
 /* ── CSS Variables ── */
 :root {
-  --bg:       #080b12;
-  --surface:  #0f1420;
-  --surface2: #161c2d;
-  --surface3: #1e263d;
-  --border:   #252e47;
-  --accent:   #6c8eff;
-  --accent2:  #ffb547;
-  --accent3:  #3de8c8;
-  --accent4:  #e86bff;
-  --text:     #dde3f5;
-  --muted:    #5c6a8a;
-  --danger:   #ff5f5f;
-  --success:  #4deba6;
+  --bg:       #0b132b;   /* deep blue - focus */
+  --surface:  #1c2541;   /* blue tone */
+  --surface2: #243b55;   /* blue-green mix */
+  --surface3: #2a4d69;   /* lighter blue */
+  --border:   #3a506b;   /* soft blue border */
+  --accent:   #3a86ff;   /* blue - focus */
+  --accent2:  #ffbe0b;   /* yellow - energy */
+  --accent3:  #2ec4b6;   /* green - calm */
+  --accent4:  #ff006e;   /* red - alertness */
+  --text:     #f1f5ff;   /* readable light text */
+  --muted:    #8fa3c7;   /* softer blue-gray */
+  --danger:   #ff4d4d;   /* alert red */
+  --success:  #38d39f;   /* fresh green */
+
   --radius:   20px;
   --shadow:   0 16px 60px rgba(0,0,0,0.6);
 }
