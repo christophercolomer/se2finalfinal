@@ -371,7 +371,7 @@ class TimerController {
       this.onTick(elapsed);
     }, 1000);
 
-    // Every 60s — POLYMORPHISM: same call, different message per class
+    // POLYMORPHISM: same call, different message per class - kada 1 min
     this.motivationInterval = window.setInterval(() => {
       if (this.session) this.onMotivation(this.session.getMotivation());
     }, 60000);
@@ -509,20 +509,20 @@ function updateHomeUI(): void {
 }
 
 function updateLevelUI(): void {
-  const pct  = levelSystem.getProgressPercent();
-  const lv   = levelSystem.getLevel();
+  const pct = levelSystem.getProgressPercent();
+  const lv = levelSystem.getLevel();
   const icon = levelSystem.getLevelIcon();
   const title = levelSystem.getLevelTitle();
-  const xp   = levelSystem.getXP();
+  const xp = levelSystem.getXP();
   const next = levelSystem.getNextLevelXP();
 
   const levelBadgeEl = document.getElementById('level-badge');
-  const levelBarEl   = document.getElementById('level-bar');
-  const levelXpEl    = document.getElementById('level-xp');
+  const levelBarEl = document.getElementById('level-bar');
+  const levelXpEl = document.getElementById('level-xp');
 
-  if (levelBadgeEl)  levelBadgeEl.textContent = `${icon} Lv.${lv} ${title}`;
-  if (levelBarEl)    (levelBarEl as HTMLElement).style.width = pct + '%';
-  if (levelXpEl)     levelXpEl.textContent = `${xp} / ${next} XP`;
+  if (levelBadgeEl) levelBadgeEl.textContent = `${icon} Lv.${lv} ${title}`;
+  if (levelBarEl) (levelBarEl as HTMLElement).style.width = pct + '%';
+  if (levelXpEl) levelXpEl.textContent = `${xp} / ${next} XP`;
   const navPill = document.getElementById('nav-level-pill');
   if (navPill) navPill.textContent = `${icon} Lv.${lv} ${title}`;
 }
@@ -537,7 +537,7 @@ function switchType(type: string): void {
   document.getElementById('tab-academic')!.classList.toggle('active', type === 'academic');
   document.getElementById('tab-skill')!.classList.toggle('active', type === 'skill');
   (document.getElementById('academic-subjects') as HTMLElement).style.display = type === 'academic' ? 'grid' : 'none';
-  (document.getElementById('skill-subjects') as HTMLElement).style.display    = type === 'skill'    ? 'grid' : 'none';
+  (document.getElementById('skill-subjects') as HTMLElement).style.display = type === 'skill'    ? 'grid' : 'none';
 }
 
 function selectSubject(btn: HTMLElement, name: string): void {
@@ -557,7 +557,7 @@ function onCustomInput(): void {
 
 function resetSetup(): void {
   selectedSubject = '';
-  currentType     = 'academic';
+  currentType = 'academic';
   document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
   (document.getElementById('custom-subject') as HTMLInputElement).value = '';
   (document.getElementById('start-btn') as HTMLButtonElement).disabled = true;
@@ -615,15 +615,15 @@ function endSession(): void {
   const leveledUp = levelSystem.addXP(elapsed);
   manager.finishActive();
 
-  // Populate summary
-  (document.getElementById('sum-subject') as HTMLElement).textContent  = session.getSubject();
-  (document.getElementById('sum-type') as HTMLElement).textContent     = session.getSessionType();
-  (document.getElementById('sum-time') as HTMLElement).textContent     = formatTime(elapsed);
-  (document.getElementById('sum-points') as HTMLElement).textContent   = `+${Math.floor(elapsed / 10)} XP earned`;
+  // For summary part
+  (document.getElementById('sum-subject') as HTMLElement).textContent = session.getSubject();
+  (document.getElementById('sum-type') as HTMLElement).textContent = session.getSessionType();
+  (document.getElementById('sum-time') as HTMLElement).textContent = formatTime(elapsed);
+  (document.getElementById('sum-points') as HTMLElement).textContent = `+${Math.floor(elapsed / 10)} XP earned`;
   (document.getElementById('sum-xp-total') as HTMLElement).textContent = `Total XP: ${levelSystem.getXP()}`;
-  (document.getElementById('sum-level') as HTMLElement).textContent    = `${levelSystem.getLevelIcon()} Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
+  (document.getElementById('sum-level') as HTMLElement).textContent = `${levelSystem.getLevelIcon()} Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
   (document.getElementById('sum-feedback') as HTMLElement).textContent = getPerformanceFeedback(elapsed);
-  (document.getElementById('sum-summary') as HTMLElement).textContent  = session.getSummary();
+  (document.getElementById('sum-summary') as HTMLElement).textContent = session.getSummary();
 
   showScreen('screen-summary');
 
@@ -637,7 +637,7 @@ function endSession(): void {
 function setTimerBtns(startDis: boolean, pauseDis: boolean, endDis: boolean): void {
   (document.getElementById('btn-start') as HTMLButtonElement).disabled = startDis;
   (document.getElementById('btn-pause') as HTMLButtonElement).disabled = pauseDis;
-  (document.getElementById('btn-end')   as HTMLButtonElement).disabled = endDis;
+  (document.getElementById('btn-end') as HTMLButtonElement).disabled = endDis;
 }
 
 function updateBadge(state: string): void {
@@ -648,15 +648,15 @@ function updateBadge(state: string): void {
 }
 
 function updateRing(elapsed: number): void {
-  const ring   = document.getElementById('ring-fg') as unknown as SVGCircleElement;
-  const max    = 565.49; // 2 * PI * 90
+  const ring = document.getElementById('ring-fg') as unknown as SVGCircleElement;
+  const max = 565.49;
   const offset = max - Math.min((elapsed / 3600) * max, max);
   ring.style.strokeDashoffset = String(offset);
 }
 
 // HISTORY SCREEN
 function renderHistory(): void {
-  const list     = document.getElementById('history-list')!;
+  const list = document.getElementById('history-list')!;
   const sessions = manager.getHistory().reverse();
 
   if (sessions.length === 0) {
