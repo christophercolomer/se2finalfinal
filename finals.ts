@@ -368,7 +368,7 @@ class TimerController {
       this.onTick(elapsed);
     }, 1000);
 
-    // POLYMORPHISM: same call, different message per class - kada 1 min
+    // Every 60s — POLYMORPHISM: same call, different message per class
     this.motivationInterval = window.setInterval(() => {
       if (this.session) this.onMotivation(this.session.getMotivation());
     }, 60000);
@@ -506,14 +506,8 @@ function updateHomeUI(): void {
 }
 
 function updateLevelUI(): void {
-<<<<<<< HEAD
   const pct = levelSystem.getProgressPercent();
   const lv = levelSystem.getLevel();
-  const icon = levelSystem.getLevelIcon();
-=======
-  const pct  = levelSystem.getProgressPercent();
-  const lv   = levelSystem.getLevel();
->>>>>>> 8689bc74f9ff7f1edfe17ee0b57c2c37179b3e9e
   const title = levelSystem.getLevelTitle();
   const xp = levelSystem.getXP();
   const next = levelSystem.getNextLevelXP();
@@ -522,15 +516,9 @@ function updateLevelUI(): void {
   const levelBarEl = document.getElementById('level-bar');
   const levelXpEl = document.getElementById('level-xp');
 
-<<<<<<< HEAD
-  if (levelBadgeEl) levelBadgeEl.textContent = `${icon} Lv.${lv} ${title}`;
+  if (levelBadgeEl)  levelBadgeEl.textContent = `Lv.${lv} ${title}`;
   if (levelBarEl) (levelBarEl as HTMLElement).style.width = pct + '%';
   if (levelXpEl) levelXpEl.textContent = `${xp} / ${next} XP`;
-=======
-  if (levelBadgeEl)  levelBadgeEl.textContent = `Lv.${lv} ${title}`;
-  if (levelBarEl)    (levelBarEl as HTMLElement).style.width = pct + '%';
-  if (levelXpEl)     levelXpEl.textContent = `${xp} / ${next} XP`;
->>>>>>> 8689bc74f9ff7f1edfe17ee0b57c2c37179b3e9e
   const navPill = document.getElementById('nav-level-pill');
   if (navPill) navPill.textContent = `Lv.${lv} ${title}`;
 }
@@ -583,7 +571,7 @@ function startSession(): void {
 
   // Populate timer screen
   (document.getElementById('timer-subject') as HTMLElement).textContent = session.getSubject();
-  (document.getElementById('timer-type') as HTMLElement).textContent    = session.getSessionType();
+  (document.getElementById('timer-type') as HTMLElement).textContent = session.getSessionType();
   (document.getElementById('timer-display') as HTMLElement).textContent = '00:00';
   (document.getElementById('ring-fg') as unknown as SVGCircleElement).style.strokeDashoffset = '565.49';
   (document.getElementById('motivation-msg') as HTMLElement).textContent = '';
@@ -623,19 +611,15 @@ function endSession(): void {
   const leveledUp = levelSystem.addXP(elapsed);
   manager.finishActive();
 
-  // For summary part
+  // Populate summary
   (document.getElementById('sum-subject') as HTMLElement).textContent = session.getSubject();
   (document.getElementById('sum-type') as HTMLElement).textContent = session.getSessionType();
   (document.getElementById('sum-time') as HTMLElement).textContent = formatTime(elapsed);
   (document.getElementById('sum-points') as HTMLElement).textContent = `+${Math.floor(elapsed / 10)} XP earned`;
   (document.getElementById('sum-xp-total') as HTMLElement).textContent = `Total XP: ${levelSystem.getXP()}`;
-<<<<<<< HEAD
-  (document.getElementById('sum-level') as HTMLElement).textContent = `${levelSystem.getLevelIcon()} Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
-=======
-  (document.getElementById('sum-level') as HTMLElement).textContent    = `Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
->>>>>>> 8689bc74f9ff7f1edfe17ee0b57c2c37179b3e9e
+  (document.getElementById('sum-level') as HTMLElement).textContent = `Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
   (document.getElementById('sum-feedback') as HTMLElement).textContent = getPerformanceFeedback(elapsed);
-  (document.getElementById('sum-summary') as HTMLElement).textContent = session.getSummary();
+  (document.getElementById('sum-summary') as HTMLElement).textContent  = session.getSummary();
 
   showScreen('screen-summary');
 
@@ -661,7 +645,7 @@ function updateBadge(state: string): void {
 
 function updateRing(elapsed: number): void {
   const ring = document.getElementById('ring-fg') as unknown as SVGCircleElement;
-  const max = 565.49;
+  const max = 565.49; // 2 * PI * 90
   const offset = max - Math.min((elapsed / 3600) * max, max);
   ring.style.strokeDashoffset = String(offset);
 }
