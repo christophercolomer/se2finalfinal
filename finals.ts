@@ -14,14 +14,14 @@ interface ILevelable {
 // XP & LEVEL SYSTEM  (standalone utility class)
 class LevelSystem implements ILevelable {
   private xp: number;
-  private static readonly LEVELS: { min: number; title: string; icon: string }[] = [
-    { min: 0, title: "Newbie", icon: "🌱" },
-    { min: 60, title: "Learner", icon: "📖" },
-    { min: 300, title: "Focused", icon: "🎯" },
-    { min: 900, title: "Consistent", icon: "🔥" },
-    { min: 2100, title: "Scholar", icon: "🏆" },
-    { min: 4500, title: "Master", icon: "🌟" },
-    { min: 9000, title: "Legend", icon: "👑" },
+  private static readonly LEVELS: { min: number; title: string}[] = [
+    { min: 0, title: "Newbie"},
+    { min: 60, title: "Learner"},
+    { min: 300, title: "Focused"},
+    { min: 900, title: "Consistent"},
+    { min: 2100, title: "Scholar"},
+    { min: 4500, title: "Master"},
+    { min: 9000, title: "Legend"},
   ];
 
   constructor(savedXP: number = 0) {
@@ -45,9 +45,6 @@ class LevelSystem implements ILevelable {
     return LevelSystem.LEVELS[this.getLevel()].title;
   }
 
-  getLevelIcon(): string {
-    return LevelSystem.LEVELS[this.getLevel()].icon;
-  }
 
   getNextLevelXP(): number {
     const next = this.getLevel() + 1;
@@ -182,7 +179,7 @@ class SkillSession extends StudySession {
   }
 
   getMotivation(): string {
-    return "Skills are built one rep at a time. Keep practicing! 🎯";
+    return "Skills are built one rep at a time. Keep practicing!";
   }
 }
 
@@ -204,11 +201,11 @@ class STEMSession extends AcademicSession {
 
   getMotivation(): string {
     const msgs = [
-      "Every equation solved is a victory! 🧪",
-      "STEM minds shape the future. You're doing it! 🚀",
-      "One problem at a time — science works like that! ⚗️",
-      "Numbers never lie. Keep crunching! 📊",
-      "Logic + persistence = mastery. You've got this! 💡",
+      "Every equation solved is a victory! ",
+      "STEM minds shape the future. You're doing it! ",
+      "One problem at a time — science works like that! ",
+      "Numbers never lie. Keep crunching! ",
+      "Logic + persistence = mastery. You've got this! ",
     ];
     return msgs[Math.floor(Math.random() * msgs.length)];
   }
@@ -232,11 +229,11 @@ class HumanitiesSession extends AcademicSession {
 
   getMotivation(): string {
     const msgs = [
-      "Words and history make us human. Keep reading! 📚",
-      "Every story expands your world! ✨",
-      "Language is power — master it! ✍️",
-      "The past teaches the future — study well! 🏛️",
-      "Great thinkers read. You're becoming one! 🧠",
+      "Words and history make us human. Keep reading! ",
+      "Every story expands your world! ",
+      "Language is power — master it! ",
+      "The past teaches the future — study well! ",
+      "Great thinkers read. You're becoming one! ",
     ];
     return msgs[Math.floor(Math.random() * msgs.length)];
   }
@@ -260,11 +257,11 @@ class TechnicalSkill extends SkillSession {
 
   getMotivation(): string {
     const msgs = [
-      "Every bug fixed makes you a better dev! 💻",
-      "Code is just logic — and you've got it! ⚡",
-      "Build, break, fix, repeat. That's the craft! 🛠️",
-      "One more function and you'll nail it! 🔧",
-      "Real programmers are made by doing. Keep going! 🖥️",
+      "Every bug fixed makes you a better dev! ",
+      "Code is just logic — and you've got it! ",
+      "Build, break, fix, repeat. That's the craft! ",
+      "One more function and you'll nail it! ",
+      "Real programmers are made by doing. Keep going! ",
     ];
     return msgs[Math.floor(Math.random() * msgs.length)];
   }
@@ -288,11 +285,11 @@ class CreativeSkill extends SkillSession {
 
   getMotivation(): string {
     const msgs = [
-      "Creativity grows when you practice it daily! 🎨",
-      "Every stroke, note, or word is progress! 🎵",
-      "Art is never wasted effort — keep creating! ✨",
-      "Your creative voice is unique. Use it! 🌟",
-      "Inspiration finds those who show up. You did! 🎭",
+      "Creativity grows when you practice it daily! ",
+      "Every stroke, note, or word is progress! ",
+      "Art is never wasted effort — keep creating! ",
+      "Your creative voice is unique. Use it! ",
+      "Inspiration finds those who show up. You did! ",
     ];
     return msgs[Math.floor(Math.random() * msgs.length)];
   }
@@ -427,14 +424,14 @@ function formatTime(seconds: number): string {
 
 function getPerformanceFeedback(seconds: number): string {
   if (seconds < 60)
-    return "Every minute counts! Start stronger next time. 🌱";
+    return "Every minute counts! Start stronger next time. ";
   if (seconds < 300)
-    return "Good start! Try to push for longer sessions! ⚡";
+    return "Good start! Try to push for longer sessions!";
   if (seconds < 600)
-    return "Solid session! You're building momentum! 🔥";
+    return "Solid session! You're building momentum!";
   if (seconds < 1800)
-    return "Great focus! You're doing amazing! 💪";
-  return "Outstanding dedication! You're a study champion! 🏆";
+    return "Great focus! You're doing amazing!";
+  return "Outstanding dedication! You're a study champion!";
 }
 
 function mapSubjectToClass(subject: string, type: string): StudySession {
@@ -511,7 +508,6 @@ function updateHomeUI(): void {
 function updateLevelUI(): void {
   const pct  = levelSystem.getProgressPercent();
   const lv   = levelSystem.getLevel();
-  const icon = levelSystem.getLevelIcon();
   const title = levelSystem.getLevelTitle();
   const xp   = levelSystem.getXP();
   const next = levelSystem.getNextLevelXP();
@@ -520,11 +516,11 @@ function updateLevelUI(): void {
   const levelBarEl   = document.getElementById('level-bar');
   const levelXpEl    = document.getElementById('level-xp');
 
-  if (levelBadgeEl)  levelBadgeEl.textContent = `${icon} Lv.${lv} ${title}`;
+  if (levelBadgeEl)  levelBadgeEl.textContent = `Lv.${lv} ${title}`;
   if (levelBarEl)    (levelBarEl as HTMLElement).style.width = pct + '%';
   if (levelXpEl)     levelXpEl.textContent = `${xp} / ${next} XP`;
   const navPill = document.getElementById('nav-level-pill');
-  if (navPill) navPill.textContent = `${icon} Lv.${lv} ${title}`;
+  if (navPill) navPill.textContent = `Lv.${lv} ${title}`;
 }
 
 // SETUP SCREEN
@@ -621,7 +617,7 @@ function endSession(): void {
   (document.getElementById('sum-time') as HTMLElement).textContent     = formatTime(elapsed);
   (document.getElementById('sum-points') as HTMLElement).textContent   = `+${Math.floor(elapsed / 10)} XP earned`;
   (document.getElementById('sum-xp-total') as HTMLElement).textContent = `Total XP: ${levelSystem.getXP()}`;
-  (document.getElementById('sum-level') as HTMLElement).textContent    = `${levelSystem.getLevelIcon()} Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
+  (document.getElementById('sum-level') as HTMLElement).textContent    = `Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
   (document.getElementById('sum-feedback') as HTMLElement).textContent = getPerformanceFeedback(elapsed);
   (document.getElementById('sum-summary') as HTMLElement).textContent  = session.getSummary();
 
