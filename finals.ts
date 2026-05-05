@@ -29,7 +29,9 @@ class LevelSystem implements ILevelable {
   }
 
   // Getters
-  getXP(): number { return this.xp; }
+  getXP(): number {
+    return this.xp;
+  }
 
   getLevel(): number {
     let level = 0;
