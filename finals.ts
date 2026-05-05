@@ -15,13 +15,13 @@ interface ILevelable {
 class LevelSystem implements ILevelable {
   private xp: number;
   private static readonly LEVELS: { min: number; title: string; icon: string }[] = [
-    { min: 0,    title: "Newbie",       icon: "🌱" },
-    { min: 60,   title: "Learner",      icon: "📖" },
-    { min: 300,  title: "Focused",      icon: "🎯" },
-    { min: 900,  title: "Consistent",   icon: "🔥" },
-    { min: 2100, title: "Scholar",      icon: "🏆" },
-    { min: 4500, title: "Master",       icon: "🌟" },
-    { min: 9000, title: "Legend",       icon: "👑" },
+    { min: 0, title: "Newbie", icon: "🌱" },
+    { min: 60, title: "Learner", icon: "📖" },
+    { min: 300, title: "Focused", icon: "🎯" },
+    { min: 900, title: "Consistent", icon: "🔥" },
+    { min: 2100, title: "Scholar", icon: "🏆" },
+    { min: 4500, title: "Master", icon: "🌟" },
+    { min: 9000, title: "Legend", icon: "👑" },
   ];
 
   constructor(savedXP: number = 0) {
@@ -49,7 +49,8 @@ class LevelSystem implements ILevelable {
 
   getNextLevelXP(): number {
     const next = this.getLevel() + 1;
-    if (next >= LevelSystem.LEVELS.length) return LevelSystem.LEVELS[LevelSystem.LEVELS.length - 1].min;
+    if (next >= LevelSystem.LEVELS.length)
+      return LevelSystem.LEVELS[LevelSystem.LEVELS.length - 1].min;
     return LevelSystem.LEVELS[next].min;
   }
 
@@ -84,25 +85,41 @@ abstract class StudySession implements ISession {
   private elapsedSeconds: number;
 
   constructor(subject: string) {
-    this.subject        = subject;
-    this.startTime      = null;
-    this.endTime        = null;
+    this.subject = subject;
+    this.startTime = null;
+    this.endTime = null;
     this.elapsedSeconds = 0;
   }
 
   // Getters (public interface for private data)
-  getSubject(): string         { return this.subject; }
-  getElapsed(): number         { return this.elapsedSeconds; }
-  getStartTime(): Date | null  { return this.startTime; }
-  getEndTime(): Date | null    { return this.endTime; }
+  getSubject(): string {
+    return this.subject;
+  }
+  getElapsed(): number {
+    return this.elapsedSeconds;
+  }
+  getStartTime(): Date | null {
+    return this.startTime;
+  }
+  getEndTime(): Date | null {
+    return this.endTime;
+  }
 
   // Setters
-  setElapsed(s: number): void  { this.elapsedSeconds = s; }
-  setSubject(s: string): void  { this.subject = s; }
+  setElapsed(s: number): void {
+    this.elapsedSeconds = s;
+  }
+  setSubject(s: string): void {
+    this.subject = s;
+  }
 
   // Concrete methods (shared behavior)
-  start(): void { this.startTime = new Date(); }
-  end(): void   { this.endTime = new Date(); }
+  start(): void {
+    this.startTime = new Date();
+  }
+  end(): void {
+    this.endTime = new Date();
+  }
 
   // ABSTRACT methods — child classes MUST implement
   abstract getSessionType(): string;
@@ -119,9 +136,13 @@ class AcademicSession extends StudySession {
     this.subjectIcon = icon;
   }
 
-  getSubjectIcon(): string { return this.subjectIcon; }
+  getSubjectIcon(): string {
+    return this.subjectIcon;
+  }
 
-  getSessionType(): string { return "Academic Session"; }
+  getSessionType(): string {
+    return "Academic Session";
+  }
 
   getSummary(): string {
     return `Studied ${this.getSubject()} for ${formatTime(this.getElapsed())}.`;
@@ -141,10 +162,16 @@ class SkillSession extends StudySession {
     this.skillLevel = skillLevel;
   }
 
-  getSkillLevel(): string        { return this.skillLevel; }
-  setSkillLevel(lvl: string): void { this.skillLevel = lvl; }
+  getSkillLevel(): string {
+    return this.skillLevel;
+  }
+  setSkillLevel(lvl: string): void {
+    this.skillLevel = lvl;
+  }
 
-  getSessionType(): string { return "Skill Session"; }
+  getSessionType(): string {
+    return "Skill Session";
+  }
 
   getSummary(): string {
     return `Practiced ${this.getSubject()} (${this.skillLevel}) for ${formatTime(this.getElapsed())}.`;
@@ -164,8 +191,12 @@ class STEMSession extends AcademicSession {
     this.difficulty = difficulty;
   }
 
-  getDifficulty(): string         { return this.difficulty; }
-  setDifficulty(d: string): void  { this.difficulty = d; }
+  getDifficulty(): string {
+    return this.difficulty;
+  }
+  setDifficulty(d: string): void {
+    this.difficulty = d;
+  }
 
   getMotivation(): string {
     const msgs = [
@@ -188,8 +219,12 @@ class HumanitiesSession extends AcademicSession {
     this.theme = theme;
   }
 
-  getTheme(): string        { return this.theme; }
-  setTheme(t: string): void { this.theme = t; }
+  getTheme(): string {
+    return this.theme;
+  }
+  setTheme(t: string): void {
+    this.theme = t;
+  }
 
   getMotivation(): string {
     const msgs = [
@@ -212,8 +247,12 @@ class TechnicalSkill extends SkillSession {
     this.tool = tool;
   }
 
-  getTool(): string        { return this.tool; }
-  setTool(t: string): void { this.tool = t; }
+  getTool(): string {
+    return this.tool;
+  }
+  setTool(t: string): void {
+    this.tool = t;
+  }
 
   getMotivation(): string {
     const msgs = [
@@ -236,8 +275,12 @@ class CreativeSkill extends SkillSession {
     this.medium = medium;
   }
 
-  getMedium(): string        { return this.medium; }
-  setMedium(m: string): void { this.medium = m; }
+  getMedium(): string {
+    return this.medium;
+  }
+  setMedium(m: string): void {
+    this.medium = m;
+  }
 
   getMotivation(): string {
     const msgs = [
@@ -266,11 +309,19 @@ class SessionManager {
     this.activeSession = session;
   }
 
-  finishActive(): void  { this.activeSession = null; }
+  finishActive(): void  {
+    this.activeSession = null;
+  }
 
-  getHistory(): StudySession[]           { return [...this.sessions]; }
-  getActive(): StudySession | null       { return this.activeSession; }
-  getCount(): number                     { return this.sessions.length; }
+  getHistory(): StudySession[] {
+    return [...this.sessions];
+  }
+  getActive(): StudySession | null {
+    return this.activeSession;
+  }
+  getCount(): number {
+    return this.sessions.length;
+  }
   getTotalTime(): number {
     return this.sessions.reduce((sum, s) => sum + s.getElapsed(), 0);
   }
@@ -289,16 +340,20 @@ class TimerController {
     onTick: (elapsed: number) => void,
     onMotivation: (msg: string) => void
   ) {
-    this.session             = null;
-    this.intervalId          = null;
-    this.motivationInterval  = null;
-    this.running             = false;
-    this.onTick              = onTick;
-    this.onMotivation        = onMotivation;
+    this.session = null;
+    this.intervalId = null;
+    this.motivationInterval = null;
+    this.running = false;
+    this.onTick = onTick;
+    this.onMotivation = onMotivation;
   }
 
-  bind(session: StudySession): void { this.session = session; }
-  isRunning(): boolean              { return this.running; }
+  bind(session: StudySession): void {
+    this.session = session;
+  }
+  isRunning(): boolean {
+    return this.running;
+  }
 
   start(): void {
     if (this.running || !this.session) return;
@@ -367,16 +422,20 @@ function formatTime(seconds: number): string {
 }
 
 function getPerformanceFeedback(seconds: number): string {
-  if (seconds < 60)   return "Every minute counts! Start stronger next time. 🌱";
-  if (seconds < 300)  return "Good start! Try to push for longer sessions! ⚡";
-  if (seconds < 600)  return "Solid session! You're building momentum! 🔥";
-  if (seconds < 1800) return "Great focus! You're doing amazing! 💪";
+  if (seconds < 60)
+    return "Every minute counts! Start stronger next time. 🌱";
+  if (seconds < 300)
+    return "Good start! Try to push for longer sessions! ⚡";
+  if (seconds < 600)
+    return "Solid session! You're building momentum! 🔥";
+  if (seconds < 1800)
+    return "Great focus! You're doing amazing! 💪";
   return "Outstanding dedication! You're a study champion! 🏆";
 }
 
 function mapSubjectToClass(subject: string, type: string): StudySession {
-  const stemSubjects  = ['Mathematics', 'Science'];
-  const techSubjects  = ['Coding'];
+  const stemSubjects = ['Mathematics', 'Science'];
+  const techSubjects = ['Coding'];
   const creativeSubjects = ['Drawing', 'Music', 'Writing'];
 
   if (type === 'academic') {
@@ -389,7 +448,6 @@ function mapSubjectToClass(subject: string, type: string): StudySession {
   }
 }
 
-// APP STATE (singleton instances)
 const manager     = new SessionManager();
 const levelSystem = new LevelSystem();
 const toast       = new ToastManager('toast-container');
@@ -399,7 +457,7 @@ let selectedSubject: string = '';
 let motivationPoints: number = 0;
 
 const timerCtrl = new TimerController(
-  // onTick callback — updates UI
+
   (elapsed: number) => {
     const disp = document.getElementById('timer-display')!;
     disp.textContent = formatTime(elapsed);
@@ -407,7 +465,7 @@ const timerCtrl = new TimerController(
     setTimeout(() => disp.classList.remove('pulse'), 500);
     updateRing(elapsed);
   },
-  // onMotivation callback — polymorphic, different per session class
+
   (msg: string) => {
     motivationPoints++;
     const el = document.getElementById('motivation-msg')!;
@@ -420,7 +478,7 @@ const timerCtrl = new TimerController(
   }
 );
 
-// SCREEN NAVIGATION  (UI Layer)
+// SCREEN NAVIGATION
 function showScreen(id: string): void {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   document.getElementById(id)!.classList.add('active');
@@ -428,11 +486,11 @@ function showScreen(id: string): void {
   (document.getElementById('app-nav') as HTMLElement).style.display = isUml ? 'none' : '';
 }
 
-function showHome(): void    { showScreen('screen-home'); updateHomeUI(); }
-function showSetup(): void   { resetSetup(); showScreen('screen-setup'); }
+function showHome(): void { showScreen('screen-home'); updateHomeUI(); }
+function showSetup(): void { resetSetup(); showScreen('screen-setup'); }
 function showHistory(): void { renderHistory(); showScreen('screen-history'); }
-function showUML(): void     { showScreen('screen-uml'); }
-function hideUML(): void     { showHome(); }
+function showUML(): void { showScreen('screen-uml'); }
+function hideUML(): void { showHome(); }
 
 // HOME UI
 function updateHomeUI(): void {
