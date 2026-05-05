@@ -29,7 +29,9 @@ var LevelSystem = /** @class */ (function () {
         this.xp = savedXP;
     }
     // Getters
-    LevelSystem.prototype.getXP = function () { return this.xp; };
+    LevelSystem.prototype.getXP = function () {
+        return this.xp;
+    };
     LevelSystem.prototype.getLevel = function () {
         var level = 0;
         for (var i = 0; i < LevelSystem.LEVELS.length; i++) {
@@ -68,7 +70,9 @@ var LevelSystem = /** @class */ (function () {
         return newLevel > prevLevel ? newLevel : -1; // returns new level if leveled up
     };
     // Setters
-    LevelSystem.prototype.setXP = function (val) { this.xp = val; };
+    LevelSystem.prototype.setXP = function (val) {
+        this.xp = val;
+    };
     LevelSystem.LEVELS = [
         { min: 0, title: "Newbie", icon: "🌱" },
         { min: 60, title: "Learner", icon: "📖" },
@@ -89,16 +93,32 @@ var StudySession = /** @class */ (function () {
         this.elapsedSeconds = 0;
     }
     // Getters (public interface for private data)
-    StudySession.prototype.getSubject = function () { return this.subject; };
-    StudySession.prototype.getElapsed = function () { return this.elapsedSeconds; };
-    StudySession.prototype.getStartTime = function () { return this.startTime; };
-    StudySession.prototype.getEndTime = function () { return this.endTime; };
+    StudySession.prototype.getSubject = function () {
+        return this.subject;
+    };
+    StudySession.prototype.getElapsed = function () {
+        return this.elapsedSeconds;
+    };
+    StudySession.prototype.getStartTime = function () {
+        return this.startTime;
+    };
+    StudySession.prototype.getEndTime = function () {
+        return this.endTime;
+    };
     // Setters
-    StudySession.prototype.setElapsed = function (s) { this.elapsedSeconds = s; };
-    StudySession.prototype.setSubject = function (s) { this.subject = s; };
+    StudySession.prototype.setElapsed = function (s) {
+        this.elapsedSeconds = s;
+    };
+    StudySession.prototype.setSubject = function (s) {
+        this.subject = s;
+    };
     // Concrete methods (shared behavior)
-    StudySession.prototype.start = function () { this.startTime = new Date(); };
-    StudySession.prototype.end = function () { this.endTime = new Date(); };
+    StudySession.prototype.start = function () {
+        this.startTime = new Date();
+    };
+    StudySession.prototype.end = function () {
+        this.endTime = new Date();
+    };
     return StudySession;
 }());
 // PARENT CLASS 1 — AcademicSession
@@ -110,8 +130,12 @@ var AcademicSession = /** @class */ (function (_super) {
         _this.subjectIcon = icon;
         return _this;
     }
-    AcademicSession.prototype.getSubjectIcon = function () { return this.subjectIcon; };
-    AcademicSession.prototype.getSessionType = function () { return "Academic Session"; };
+    AcademicSession.prototype.getSubjectIcon = function () {
+        return this.subjectIcon;
+    };
+    AcademicSession.prototype.getSessionType = function () {
+        return "Academic Session";
+    };
     AcademicSession.prototype.getSummary = function () {
         return "Studied ".concat(this.getSubject(), " for ").concat(formatTime(this.getElapsed()), ".");
     };
@@ -129,9 +153,15 @@ var SkillSession = /** @class */ (function (_super) {
         _this.skillLevel = skillLevel;
         return _this;
     }
-    SkillSession.prototype.getSkillLevel = function () { return this.skillLevel; };
-    SkillSession.prototype.setSkillLevel = function (lvl) { this.skillLevel = lvl; };
-    SkillSession.prototype.getSessionType = function () { return "Skill Session"; };
+    SkillSession.prototype.getSkillLevel = function () {
+        return this.skillLevel;
+    };
+    SkillSession.prototype.setSkillLevel = function (lvl) {
+        this.skillLevel = lvl;
+    };
+    SkillSession.prototype.getSessionType = function () {
+        return "Skill Session";
+    };
     SkillSession.prototype.getSummary = function () {
         return "Practiced ".concat(this.getSubject(), " (").concat(this.skillLevel, ") for ").concat(formatTime(this.getElapsed()), ".");
     };
@@ -149,8 +179,12 @@ var STEMSession = /** @class */ (function (_super) {
         _this.difficulty = difficulty;
         return _this;
     }
-    STEMSession.prototype.getDifficulty = function () { return this.difficulty; };
-    STEMSession.prototype.setDifficulty = function (d) { this.difficulty = d; };
+    STEMSession.prototype.getDifficulty = function () {
+        return this.difficulty;
+    };
+    STEMSession.prototype.setDifficulty = function (d) {
+        this.difficulty = d;
+    };
     STEMSession.prototype.getMotivation = function () {
         var msgs = [
             "Every equation solved is a victory! 🧪",
@@ -172,8 +206,12 @@ var HumanitiesSession = /** @class */ (function (_super) {
         _this.theme = theme;
         return _this;
     }
-    HumanitiesSession.prototype.getTheme = function () { return this.theme; };
-    HumanitiesSession.prototype.setTheme = function (t) { this.theme = t; };
+    HumanitiesSession.prototype.getTheme = function () {
+        return this.theme;
+    };
+    HumanitiesSession.prototype.setTheme = function (t) {
+        this.theme = t;
+    };
     HumanitiesSession.prototype.getMotivation = function () {
         var msgs = [
             "Words and history make us human. Keep reading! 📚",
@@ -195,8 +233,12 @@ var TechnicalSkill = /** @class */ (function (_super) {
         _this.tool = tool;
         return _this;
     }
-    TechnicalSkill.prototype.getTool = function () { return this.tool; };
-    TechnicalSkill.prototype.setTool = function (t) { this.tool = t; };
+    TechnicalSkill.prototype.getTool = function () {
+        return this.tool;
+    };
+    TechnicalSkill.prototype.setTool = function (t) {
+        this.tool = t;
+    };
     TechnicalSkill.prototype.getMotivation = function () {
         var msgs = [
             "Every bug fixed makes you a better dev! 💻",
@@ -218,8 +260,12 @@ var CreativeSkill = /** @class */ (function (_super) {
         _this.medium = medium;
         return _this;
     }
-    CreativeSkill.prototype.getMedium = function () { return this.medium; };
-    CreativeSkill.prototype.setMedium = function (m) { this.medium = m; };
+    CreativeSkill.prototype.getMedium = function () {
+        return this.medium;
+    };
+    CreativeSkill.prototype.setMedium = function (m) {
+        this.medium = m;
+    };
     CreativeSkill.prototype.getMotivation = function () {
         var msgs = [
             "Creativity grows when you practice it daily! 🎨",
@@ -242,10 +288,18 @@ var SessionManager = /** @class */ (function () {
         this.sessions.push(session);
         this.activeSession = session;
     };
-    SessionManager.prototype.finishActive = function () { this.activeSession = null; };
-    SessionManager.prototype.getHistory = function () { return __spreadArray([], this.sessions, true); };
-    SessionManager.prototype.getActive = function () { return this.activeSession; };
-    SessionManager.prototype.getCount = function () { return this.sessions.length; };
+    SessionManager.prototype.finishActive = function () {
+        this.activeSession = null;
+    };
+    SessionManager.prototype.getHistory = function () {
+        return __spreadArray([], this.sessions, true);
+    };
+    SessionManager.prototype.getActive = function () {
+        return this.activeSession;
+    };
+    SessionManager.prototype.getCount = function () {
+        return this.sessions.length;
+    };
     SessionManager.prototype.getTotalTime = function () {
         return this.sessions.reduce(function (sum, s) { return sum + s.getElapsed(); }, 0);
     };
@@ -261,8 +315,12 @@ var TimerController = /** @class */ (function () {
         this.onTick = onTick;
         this.onMotivation = onMotivation;
     }
-    TimerController.prototype.bind = function (session) { this.session = session; };
-    TimerController.prototype.isRunning = function () { return this.running; };
+    TimerController.prototype.bind = function (session) {
+        this.session = session;
+    };
+    TimerController.prototype.isRunning = function () {
+        return this.running;
+    };
     TimerController.prototype.start = function () {
         var _this = this;
         if (this.running || !this.session)
@@ -303,7 +361,7 @@ var TimerController = /** @class */ (function () {
     };
     return TimerController;
 }());
-// TOAST MANAGER  (UI Utility)
+// TOAST MANAGER
 var ToastManager = /** @class */ (function () {
     function ToastManager(containerId) {
         this.container = document.getElementById(containerId);
@@ -357,24 +415,19 @@ function mapSubjectToClass(subject, type) {
         return new TechnicalSkill(subject);
     }
 }
-// APP STATE (singleton instances)
 var manager = new SessionManager();
 var levelSystem = new LevelSystem();
 var toast = new ToastManager('toast-container');
 var currentType = 'academic';
 var selectedSubject = '';
 var motivationPoints = 0;
-var timerCtrl = new TimerController(
-// onTick callback — updates UI
-function (elapsed) {
+var timerCtrl = new TimerController(function (elapsed) {
     var disp = document.getElementById('timer-display');
     disp.textContent = formatTime(elapsed);
     disp.classList.add('pulse');
     setTimeout(function () { return disp.classList.remove('pulse'); }, 500);
     updateRing(elapsed);
-}, 
-// onMotivation callback — polymorphic, different per session class
-function (msg) {
+}, function (msg) {
     motivationPoints++;
     var el = document.getElementById('motivation-msg');
     el.style.opacity = '0';
@@ -384,17 +437,14 @@ function (msg) {
         toast.show('💬 ' + msg, 4000);
     }, 400);
 });
-// SCREEN NAVIGATION  (UI Layer)
+// SCREEN NAVIGATION
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(function (s) { return s.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
-    var isUml = id === 'screen-uml';
-    document.getElementById('app-nav').style.display = isUml ? 'none' : '';
 }
 function showHome() { showScreen('screen-home'); updateHomeUI(); }
 function showSetup() { resetSetup(); showScreen('screen-setup'); }
 function showHistory() { renderHistory(); showScreen('screen-history'); }
-function showUML() { showScreen('screen-uml'); }
 function hideUML() { showHome(); }
 // HOME UI
 function updateHomeUI() {
@@ -462,7 +512,7 @@ function resetSetup() {
 function startSession() {
     if (!selectedSubject)
         return;
-    // Factory: gacreate correct OOP subclass — Polymorphism in act
+    // gacreate correct OOP subclass — Polymorphism in act
     var session = mapSubjectToClass(selectedSubject, currentType);
     manager.addSession(session);
     timerCtrl.bind(session);

@@ -76,7 +76,9 @@ class LevelSystem implements ILevelable {
   }
 
   // Setters
-  setXP(val: number): void { this.xp = val; }
+  setXP(val: number): void {
+    this.xp = val;
+  }
 }
 
 // ABSTRACT CLASS — StudySession
@@ -302,7 +304,7 @@ class SessionManager {
   private activeSession: StudySession | null;
 
   constructor() {
-    this.sessions      = [];
+    this.sessions = [];
     this.activeSession = null;
   }
 
@@ -378,7 +380,7 @@ class TimerController {
   pause(): void {
     if (!this.running) return;
     this.running = false;
-    if (this.intervalId)        clearInterval(this.intervalId);
+    if (this.intervalId) clearInterval(this.intervalId);
     if (this.motivationInterval) clearInterval(this.motivationInterval);
   }
 
@@ -394,7 +396,7 @@ class TimerController {
   }
 }
 
-// TOAST MANAGER  (UI Utility)
+// TOAST MANAGER
 class ToastManager {
   private container: HTMLElement;
 
@@ -441,20 +443,24 @@ function mapSubjectToClass(subject: string, type: string): StudySession {
   const creativeSubjects = ['Drawing', 'Music', 'Writing'];
 
   if (type === 'academic') {
-    if (stemSubjects.indexOf(subject) !== -1) return new STEMSession(subject);
+    if (stemSubjects.indexOf(subject) !== -1)
+      return new STEMSession(subject);
     return new HumanitiesSession(subject);
-  } else {
-    if (techSubjects.indexOf(subject) !== -1)    return new TechnicalSkill(subject, 'Code Editor');
-    if (creativeSubjects.indexOf(subject) !== -1) return new CreativeSkill(subject, subject);
+  } 
+  else {
+    if (techSubjects.indexOf(subject) !== -1)
+      return new TechnicalSkill(subject, 'Code Editor');
+    if (creativeSubjects.indexOf(subject) !== -1)
+      return new CreativeSkill(subject, subject);
     return new TechnicalSkill(subject);
   }
 }
 
-const manager     = new SessionManager();
+const manager = new SessionManager();
 const levelSystem = new LevelSystem();
-const toast       = new ToastManager('toast-container');
+const toast = new ToastManager('toast-container');
 
-let currentType: string     = 'academic';
+let currentType: string = 'academic';
 let selectedSubject: string = '';
 let motivationPoints: number = 0;
 
@@ -484,14 +490,11 @@ const timerCtrl = new TimerController(
 function showScreen(id: string): void {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   document.getElementById(id)!.classList.add('active');
-  const isUml = id === 'screen-uml';
-  (document.getElementById('app-nav') as HTMLElement).style.display = isUml ? 'none' : '';
 }
 
 function showHome(): void { showScreen('screen-home'); updateHomeUI(); }
 function showSetup(): void { resetSetup(); showScreen('screen-setup'); }
 function showHistory(): void { renderHistory(); showScreen('screen-history'); }
-function showUML(): void { showScreen('screen-uml'); }
 function hideUML(): void { showHome(); }
 
 // HOME UI
@@ -564,7 +567,7 @@ function resetSetup(): void {
 function startSession(): void {
   if (!selectedSubject) return;
 
-  // Factory: gacreate correct OOP subclass — Polymorphism in act
+  // gacreate correct OOP subclass — Polymorphism in act
   const session = mapSubjectToClass(selectedSubject, currentType);
   manager.addSession(session);
   timerCtrl.bind(session);
