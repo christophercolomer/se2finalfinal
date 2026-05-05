@@ -81,17 +81,17 @@
         </button>
       </div>
 
-      //Academic subjects
+      <!-- Academic Subs -->
       <div id="academic-subjects" class="subject-grid">
-        <button class="subject-btn" onclick="selectSubject(this, 'Mathematics')">📐 Calculus</button>
-        <button class="subject-btn" onclick="selectSubject(this, 'Science')">🔬 Biology</button>
-        <button class="subject-btn" onclick="selectSubject(this, 'History')">📜 Physics</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'Calculus')">📐 Calculus</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'Biology')">🔬 Biology</button>
+        <button class="subject-btn" onclick="selectSubject(this, 'History')">📜 History</button>
         <button class="subject-btn" onclick="selectSubject(this, 'English')">✍️ English</button>
         <button class="subject-btn" onclick="selectSubject(this, 'Filipino')">🇵🇭 Filipino</button>
         <button class="subject-btn" onclick="selectSubject(this, 'MAPEH')">🎵 MAPEH</button>
       </div>
 
-      //Skill subjects
+      <!-- Skill subs -->
       <div id="skill-subjects" class="subject-grid" style="display:none;">
         <button class="subject-btn" onclick="selectSubject(this, 'Coding')">💻 Coding</button>
         <button class="subject-btn" onclick="selectSubject(this, 'Drawing')">🎨 Drawing</button>
@@ -103,7 +103,7 @@
 
       <hr class="divider" />
 
-      //Custom subject
+      <!-- Custom -->
       <div class="input-group">
         <label class="input-label">Or type a custom subject</label>
         <input
@@ -170,6 +170,7 @@
       <button class="btn btn-danger" id="btn-end" onclick="endSession()" disabled>
         ⏹ &nbsp; End Session
       </button>
+      <button class="btn btn-ghost" onclick="showSetup()">← Back</button>
 
       <!-- Motivation message (polymorphic output) -->
       <div class="motivation-msg" id="motivation-msg"></div>
