@@ -5,14 +5,14 @@ interface ISession {
   getMotivation(): string;
 }
 
-interface ILevelable {
+interface IProficiency {
   getXP(): number;
   getLevel(): number;
   getLevelTitle(): string;
 }
 
 // XP & LEVEL SYSTEM  (standalone utility class)
-class LevelSystem implements ILevelable {
+class LevelSystem implements IProficiency {
   private xp: number;
   private static readonly LEVELS: { min: number; title: string }[] = [
     { min: 0, title: "Newbie" },
