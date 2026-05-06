@@ -601,4 +601,4 @@ function renderHistory() {
 // INIT
 (function init() {
     showHome();
-})();
+})(); 

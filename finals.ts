@@ -14,14 +14,14 @@ interface ILevelable {
 // XP & LEVEL SYSTEM  (standalone utility class)
 class LevelSystem implements ILevelable {
   private xp: number;
-  private static readonly LEVELS: { min: number; title: string}[] = [
-    { min: 0, title: "Newbie"},
-    { min: 60, title: "Learner"},
-    { min: 300, title: "Focused"},
-    { min: 900, title: "Consistent"},
-    { min: 2100, title: "Scholar"},
-    { min: 4500, title: "Master"},
-    { min: 9000, title: "Legend"},
+  private static readonly LEVELS: { min: number; title: string }[] = [
+    { min: 0, title: "Newbie" },
+    { min: 60, title: "Learner" },
+    { min: 300, title: "Focused" },
+    { min: 900, title: "Consistent" },
+    { min: 2100, title: "Scholar" },
+    { min: 4500, title: "Master" },
+    { min: 9000, title: "Legend" },
   ];
 
   constructor(savedXP: number = 0) {
@@ -44,7 +44,6 @@ class LevelSystem implements ILevelable {
   getLevelTitle(): string {
     return LevelSystem.LEVELS[this.getLevel()].title;
   }
-
 
   getNextLevelXP(): number {
     const next = this.getLevel() + 1;
@@ -156,7 +155,7 @@ class AcademicSession extends StudySession {
 
 // PARENT CLASS 2 — SkillSession
 class SkillSession extends StudySession {
-  private skillLevel: string;   // ENCAPSULATION: private
+  private skillLevel: string; // ENCAPSULATION: private
 
   constructor(subject: string, skillLevel: string = "Beginner") {
     super(subject);
@@ -310,7 +309,7 @@ class SessionManager {
     this.activeSession = session;
   }
 
-  finishActive(): void  {
+  finishActive(): void {
     this.activeSession = null;
   }
 
@@ -339,7 +338,7 @@ class TimerController {
 
   constructor(
     onTick: (elapsed: number) => void,
-    onMotivation: (msg: string) => void
+    onMotivation: (msg: string) => void,
   ) {
     this.session = null;
     this.intervalId = null;
@@ -402,12 +401,12 @@ class ToastManager {
   }
 
   show(message: string, duration: number = 2800): void {
-    const el = document.createElement('div');
-    el.className = 'toast';
+    const el = document.createElement("div");
+    el.className = "toast";
     el.textContent = message;
     this.container.appendChild(el);
     setTimeout(() => {
-      el.classList.add('out');
+      el.classList.add("out");
       setTimeout(() => el.remove(), 350);
     }, duration);
   }
@@ -417,36 +416,30 @@ class ToastManager {
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
-  const mm = m < 10 ? '0' + m : '' + m;
-  const ss = s < 10 ? '0' + s : '' + s;
-  return mm + ':' + ss;
+  const mm = m < 10 ? "0" + m : "" + m;
+  const ss = s < 10 ? "0" + s : "" + s;
+  return mm + ":" + ss;
 }
 
 function getPerformanceFeedback(seconds: number): string {
-  if (seconds < 60)
-    return "Every minute counts! Start stronger next time. ";
-  if (seconds < 300)
-    return "Good start! Try to push for longer sessions!";
-  if (seconds < 600)
-    return "Solid session! You're building momentum!";
-  if (seconds < 1800)
-    return "Great focus! You're doing amazing!";
+  if (seconds < 60) return "Every minute counts! Start stronger next time. ";
+  if (seconds < 300) return "Good start! Try to push for longer sessions!";
+  if (seconds < 600) return "Solid session! You're building momentum!";
+  if (seconds < 1800) return "Great focus! You're doing amazing!";
   return "Outstanding dedication! You're a study champion!";
 }
 
 function mapSubjectToClass(subject: string, type: string): StudySession {
-  const stemSubjects = ['Mathematics', 'Science'];
-  const techSubjects = ['Coding'];
-  const creativeSubjects = ['Drawing', 'Music', 'Writing'];
+  const stemSubjects = ["Mathematics", "Science"];
+  const techSubjects = ["Coding"];
+  const creativeSubjects = ["Drawing", "Music", "Writing"];
 
-  if (type === 'academic') {
-    if (stemSubjects.indexOf(subject) !== -1)
-      return new STEMSession(subject);
+  if (type === "academic") {
+    if (stemSubjects.indexOf(subject) !== -1) return new STEMSession(subject);
     return new HumanitiesSession(subject);
-  } 
-  else {
+  } else {
     if (techSubjects.indexOf(subject) !== -1)
-      return new TechnicalSkill(subject, 'Code Editor');
+      return new TechnicalSkill(subject, "Code Editor");
     if (creativeSubjects.indexOf(subject) !== -1)
       return new CreativeSkill(subject, subject);
     return new TechnicalSkill(subject);
@@ -455,53 +448,66 @@ function mapSubjectToClass(subject: string, type: string): StudySession {
 
 const manager = new SessionManager();
 const levelSystem = new LevelSystem();
-const toast = new ToastManager('toast-container');
+const toast = new ToastManager("toast-container");
 
-let currentType: string = 'academic';
-let selectedSubject: string = '';
+let currentType: string = "academic";
+let selectedSubject: string = "";
 let motivationPoints: number = 0;
 
 const timerCtrl = new TimerController(
-
   (elapsed: number) => {
-    const disp = document.getElementById('timer-display')!;
+    const disp = document.getElementById("timer-display")!;
     disp.textContent = formatTime(elapsed);
-    disp.classList.add('pulse');
-    setTimeout(() => disp.classList.remove('pulse'), 500);
+    disp.classList.add("pulse");
+    setTimeout(() => disp.classList.remove("pulse"), 500);
     updateRing(elapsed);
   },
 
   (msg: string) => {
     motivationPoints++;
-    const el = document.getElementById('motivation-msg')!;
-    el.style.opacity = '0';
+    const el = document.getElementById("motivation-msg")!;
+    el.style.opacity = "0";
     setTimeout(() => {
       el.textContent = msg;
-      el.style.opacity = '1';
-      toast.show('💬 ' + msg, 4000);
+      el.style.opacity = "1";
+      toast.show("💬 " + msg, 4000);
     }, 400);
-  }
+  },
 );
 
 // SCREEN NAVIGATION
 function showScreen(id: string): void {
-  document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
-  document.getElementById(id)!.classList.add('active');
+  document
+    .querySelectorAll(".screen")
+    .forEach((s) => s.classList.remove("active"));
+  document.getElementById(id)!.classList.add("active");
 }
 
-function showHome(): void { showScreen('screen-home'); updateHomeUI(); }
-function showSetup(): void { resetSetup(); showScreen('screen-setup'); }
-function showHistory(): void { renderHistory(); showScreen('screen-history'); }
-function hideUML(): void { showHome(); }
+function showHome(): void {
+  showScreen("screen-home");
+  updateHomeUI();
+}
+function showSetup(): void {
+  resetSetup();
+  showScreen("screen-setup");
+}
+function showHistory(): void {
+  renderHistory();
+  showScreen("screen-history");
+}
+function hideUML(): void {
+  showHome();
+}
 
 // HOME UI
 function updateHomeUI(): void {
   const count = manager.getCount();
   const total = manager.getTotalTime();
-  const el = document.getElementById('streak-text')!;
-  el.textContent = count === 0
-    ? "Start your first session today!"
-    : `${count} session${count > 1 ? 's' : ''} completed · ${formatTime(total)} total time`;
+  const el = document.getElementById("streak-text")!;
+  el.textContent =
+    count === 0
+      ? "Start your first session today!"
+      : `${count} session${count > 1 ? "s" : ""} completed · ${formatTime(total)} total time`;
   updateLevelUI();
 }
 
@@ -512,52 +518,69 @@ function updateLevelUI(): void {
   const xp = levelSystem.getXP();
   const next = levelSystem.getNextLevelXP();
 
-  const levelBadgeEl = document.getElementById('level-badge');
-  const levelBarEl = document.getElementById('level-bar');
-  const levelXpEl = document.getElementById('level-xp');
+  const levelBadgeEl = document.getElementById("level-badge");
+  const levelBarEl = document.getElementById("level-bar");
+  const levelXpEl = document.getElementById("level-xp");
 
-  if (levelBadgeEl)  levelBadgeEl.textContent = `Lv.${lv} ${title}`;
-  if (levelBarEl) (levelBarEl as HTMLElement).style.width = pct + '%';
+  if (levelBadgeEl) levelBadgeEl.textContent = `Lv.${lv} ${title}`;
+  if (levelBarEl) (levelBarEl as HTMLElement).style.width = pct + "%";
   if (levelXpEl) levelXpEl.textContent = `${xp} / ${next} XP`;
-  const navPill = document.getElementById('nav-level-pill');
+  const navPill = document.getElementById("nav-level-pill");
   if (navPill) navPill.textContent = `Lv.${lv} ${title}`;
 }
 
 // SETUP SCREEN
 function switchType(type: string): void {
   currentType = type;
-  selectedSubject = '';
-  document.querySelectorAll<HTMLElement>('.subject-btn').forEach(b => b.classList.remove('selected'));
-  (document.getElementById('custom-subject') as HTMLInputElement).value = '';
-  (document.getElementById('start-btn') as HTMLButtonElement).disabled = true;
-  document.getElementById('tab-academic')!.classList.toggle('active', type === 'academic');
-  document.getElementById('tab-skill')!.classList.toggle('active', type === 'skill');
-  (document.getElementById('academic-subjects') as HTMLElement).style.display = type === 'academic' ? 'grid' : 'none';
-  (document.getElementById('skill-subjects') as HTMLElement).style.display = type === 'skill'    ? 'grid' : 'none';
+  selectedSubject = "";
+  document
+    .querySelectorAll<HTMLElement>(".subject-btn")
+    .forEach((b) => b.classList.remove("selected"));
+  (document.getElementById("custom-subject") as HTMLInputElement).value = "";
+  (document.getElementById("start-btn") as HTMLButtonElement).disabled = true;
+  document
+    .getElementById("tab-academic")!
+    .classList.toggle("active", type === "academic");
+  document
+    .getElementById("tab-skill")!
+    .classList.toggle("active", type === "skill");
+  (document.getElementById("academic-subjects") as HTMLElement).style.display =
+    type === "academic" ? "grid" : "none";
+  (document.getElementById("skill-subjects") as HTMLElement).style.display =
+    type === "skill" ? "grid" : "none";
 }
 
 function selectSubject(btn: HTMLElement, name: string): void {
-  document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
+  document
+    .querySelectorAll(".subject-btn")
+    .forEach((b) => b.classList.remove("selected"));
+  btn.classList.add("selected");
   selectedSubject = name;
-  (document.getElementById('custom-subject') as HTMLInputElement).value = '';
-  (document.getElementById('start-btn') as HTMLButtonElement).disabled = false;
+  (document.getElementById("custom-subject") as HTMLInputElement).value = "";
+  (document.getElementById("start-btn") as HTMLButtonElement).disabled = false;
 }
 
 function onCustomInput(): void {
-  const val = (document.getElementById('custom-subject') as HTMLInputElement).value.trim();
-  document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
+  const val = (
+    document.getElementById("custom-subject") as HTMLInputElement
+  ).value.trim();
+  document
+    .querySelectorAll(".subject-btn")
+    .forEach((b) => b.classList.remove("selected"));
   selectedSubject = val;
-  (document.getElementById('start-btn') as HTMLButtonElement).disabled = val.length === 0;
+  (document.getElementById("start-btn") as HTMLButtonElement).disabled =
+    val.length === 0;
 }
 
 function resetSetup(): void {
-  selectedSubject = '';
-  currentType = 'academic';
-  document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
-  (document.getElementById('custom-subject') as HTMLInputElement).value = '';
-  (document.getElementById('start-btn') as HTMLButtonElement).disabled = true;
-  switchType('academic');
+  selectedSubject = "";
+  currentType = "academic";
+  document
+    .querySelectorAll(".subject-btn")
+    .forEach((b) => b.classList.remove("selected"));
+  (document.getElementById("custom-subject") as HTMLInputElement).value = "";
+  (document.getElementById("start-btn") as HTMLButtonElement).disabled = true;
+  switchType("academic");
 }
 
 function startSession(): void {
@@ -570,15 +593,20 @@ function startSession(): void {
   motivationPoints = 0;
 
   // Populate timer screen
-  (document.getElementById('timer-subject') as HTMLElement).textContent = session.getSubject();
-  (document.getElementById('timer-type') as HTMLElement).textContent = session.getSessionType();
-  (document.getElementById('timer-display') as HTMLElement).textContent = '00:00';
-  (document.getElementById('ring-fg') as unknown as SVGCircleElement).style.strokeDashoffset = '565.49';
-  (document.getElementById('motivation-msg') as HTMLElement).textContent = '';
+  (document.getElementById("timer-subject") as HTMLElement).textContent =
+    session.getSubject();
+  (document.getElementById("timer-type") as HTMLElement).textContent =
+    session.getSessionType();
+  (document.getElementById("timer-display") as HTMLElement).textContent =
+    "00:00";
+  (
+    document.getElementById("ring-fg") as unknown as SVGCircleElement
+  ).style.strokeDashoffset = "565.49";
+  (document.getElementById("motivation-msg") as HTMLElement).textContent = "";
 
   setTimerBtns(false, true, true);
-  updateBadge('idle');
-  showScreen('screen-timer');
+  updateBadge("idle");
+  showScreen("screen-timer");
   toast.show("Let's go! 💪 Session ready.");
 }
 
@@ -586,20 +614,21 @@ function startSession(): void {
 function timerStart(): void {
   timerCtrl.start();
   setTimerBtns(true, false, false);
-  updateBadge('running');
+  updateBadge("running");
   const session = manager.getActive();
   if (session) {
     const msg = session.getMotivation(); // POLYMORPHISM here
-    (document.getElementById('motivation-msg') as HTMLElement).textContent = msg;
-    toast.show('✨ ' + msg, 3500);
+    (document.getElementById("motivation-msg") as HTMLElement).textContent =
+      msg;
+    toast.show("✨ " + msg, 3500);
   }
 }
 
 function timerPause(): void {
   timerCtrl.pause();
   setTimerBtns(false, false, false);
-  updateBadge('paused');
-  toast.show('⏸ Paused — take a breath!');
+  updateBadge("paused");
+  toast.show("⏸ Paused — take a breath!");
 }
 
 function endSession(): void {
@@ -612,39 +641,66 @@ function endSession(): void {
   manager.finishActive();
 
   // Populate summary
-  (document.getElementById('sum-subject') as HTMLElement).textContent = session.getSubject();
-  (document.getElementById('sum-type') as HTMLElement).textContent = session.getSessionType();
-  (document.getElementById('sum-time') as HTMLElement).textContent = formatTime(elapsed);
-  (document.getElementById('sum-points') as HTMLElement).textContent = `+${Math.floor(elapsed / 10)} XP earned`;
-  (document.getElementById('sum-xp-total') as HTMLElement).textContent = `Total XP: ${levelSystem.getXP()}`;
-  (document.getElementById('sum-level') as HTMLElement).textContent = `Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
-  (document.getElementById('sum-feedback') as HTMLElement).textContent = getPerformanceFeedback(elapsed);
-  (document.getElementById('sum-summary') as HTMLElement).textContent  = session.getSummary();
+  (document.getElementById("sum-subject") as HTMLElement).textContent =
+    session.getSubject();
+  (document.getElementById("sum-type") as HTMLElement).textContent =
+    session.getSessionType();
+  (document.getElementById("sum-time") as HTMLElement).textContent =
+    formatTime(elapsed);
+  (document.getElementById("sum-points") as HTMLElement).textContent =
+    `+${Math.floor(elapsed / 10)} XP earned`;
+  (document.getElementById("sum-xp-total") as HTMLElement).textContent =
+    `Total XP: ${levelSystem.getXP()}`;
+  (document.getElementById("sum-level") as HTMLElement).textContent =
+    `Lv.${levelSystem.getLevel()} — ${levelSystem.getLevelTitle()}`;
+  (document.getElementById("sum-feedback") as HTMLElement).textContent =
+    getPerformanceFeedback(elapsed);
+  (document.getElementById("sum-summary") as HTMLElement).textContent =
+    session.getSummary();
 
-  showScreen('screen-summary');
+  showScreen("screen-summary");
 
   if (leveledUp !== -1) {
-    setTimeout(() => toast.show(`🎉 LEVEL UP! You're now Lv.${leveledUp} ${levelSystem.getLevelTitle()}!`, 5000), 600);
+    setTimeout(
+      () =>
+        toast.show(
+          `🎉 LEVEL UP! You're now Lv.${leveledUp} ${levelSystem.getLevelTitle()}!`,
+          5000,
+        ),
+      600,
+    );
   } else {
-    toast.show('✅ Session saved! Great work!', 3000);
+    toast.show("✅ Session saved! Great work!", 3000);
   }
 }
 
-function setTimerBtns(startDis: boolean, pauseDis: boolean, endDis: boolean): void {
-  (document.getElementById('btn-start') as HTMLButtonElement).disabled = startDis;
-  (document.getElementById('btn-pause') as HTMLButtonElement).disabled = pauseDis;
-  (document.getElementById('btn-end') as HTMLButtonElement).disabled = endDis;
+function setTimerBtns(
+  startDis: boolean,
+  pauseDis: boolean,
+  endDis: boolean,
+): void {
+  (document.getElementById("btn-start") as HTMLButtonElement).disabled =
+    startDis;
+  (document.getElementById("btn-pause") as HTMLButtonElement).disabled =
+    pauseDis;
+  (document.getElementById("btn-end") as HTMLButtonElement).disabled = endDis;
 }
 
 function updateBadge(state: string): void {
-  const badge = document.getElementById('status-badge')!;
-  const labels: Record<string, string> = { idle: 'Idle', running: 'Running', paused: 'Paused' };
+  const badge = document.getElementById("status-badge")!;
+  const labels: Record<string, string> = {
+    idle: "Idle",
+    running: "Running",
+    paused: "Paused",
+  };
   badge.className = `status-badge ${state}`;
-  badge.innerHTML = `<span class="dot${state === 'running' ? ' blink' : ''}"></span> ${labels[state]}`;
+  badge.innerHTML = `<span class="dot${state === "running" ? " blink" : ""}"></span> ${labels[state]}`;
 }
 
 function updateRing(elapsed: number): void {
-  const ring = document.getElementById('ring-fg') as unknown as SVGCircleElement;
+  const ring = document.getElementById(
+    "ring-fg",
+  ) as unknown as SVGCircleElement;
   const max = 565.49; // 2 * PI * 90
   const offset = max - Math.min((elapsed / 3600) * max, max);
   ring.style.strokeDashoffset = String(offset);
@@ -652,15 +708,18 @@ function updateRing(elapsed: number): void {
 
 // HISTORY SCREEN
 function renderHistory(): void {
-  const list = document.getElementById('history-list')!;
+  const list = document.getElementById("history-list")!;
   const sessions = manager.getHistory().reverse();
 
   if (sessions.length === 0) {
-    list.innerHTML = '<div class="empty-state">No sessions yet. Start studying! 📚</div>';
+    list.innerHTML =
+      '<div class="empty-state">No sessions yet. Start studying! 📚</div>';
     return;
   }
 
-  list.innerHTML = sessions.map(s => `
+  list.innerHTML = sessions
+    .map(
+      (s) => `
     <div class="history-item">
       <div class="history-item-left">
         <div class="history-item-subject">${s.getSubject()}</div>
@@ -668,10 +727,9 @@ function renderHistory(): void {
       </div>
       <div class="history-item-time">${formatTime(s.getElapsed())}</div>
     </div>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
-// INIT
-(function init(): void {
-  showHome();
-})();
+showHome();
