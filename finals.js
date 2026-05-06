@@ -43,9 +43,6 @@ var LevelSystem = /** @class */ (function () {
     LevelSystem.prototype.getLevelTitle = function () {
         return LevelSystem.LEVELS[this.getLevel()].title;
     };
-    LevelSystem.prototype.getLevelIcon = function () {
-        return LevelSystem.LEVELS[this.getLevel()].icon;
-    };
     LevelSystem.prototype.getNextLevelXP = function () {
         var next = this.getLevel() + 1;
         if (next >= LevelSystem.LEVELS.length)
@@ -69,18 +66,14 @@ var LevelSystem = /** @class */ (function () {
         var newLevel = this.getLevel();
         return newLevel > prevLevel ? newLevel : -1; // returns new level if leveled up
     };
-    // Setters
-    LevelSystem.prototype.setXP = function (val) {
-        this.xp = val;
-    };
     LevelSystem.LEVELS = [
-        { min: 0, title: "Newbie", icon: "🌱" },
-        { min: 60, title: "Learner", icon: "📖" },
-        { min: 300, title: "Focused", icon: "🎯" },
-        { min: 900, title: "Consistent", icon: "🔥" },
-        { min: 2100, title: "Scholar", icon: "🏆" },
-        { min: 4500, title: "Master", icon: "🌟" },
-        { min: 9000, title: "Legend", icon: "👑" },
+        { min: 0, title: "Newbie" },
+        { min: 60, title: "Learner" },
+        { min: 300, title: "Focused" },
+        { min: 900, title: "Consistent" },
+        { min: 2100, title: "Scholar" },
+        { min: 4500, title: "Master" },
+        { min: 9000, title: "Legend" },
     ];
     return LevelSystem;
 }());
@@ -99,18 +92,9 @@ var StudySession = /** @class */ (function () {
     StudySession.prototype.getElapsed = function () {
         return this.elapsedSeconds;
     };
-    StudySession.prototype.getStartTime = function () {
-        return this.startTime;
-    };
-    StudySession.prototype.getEndTime = function () {
-        return this.endTime;
-    };
     // Setters
     StudySession.prototype.setElapsed = function (s) {
         this.elapsedSeconds = s;
-    };
-    StudySession.prototype.setSubject = function (s) {
-        this.subject = s;
     };
     // Concrete methods (shared behavior)
     StudySession.prototype.start = function () {
@@ -124,23 +108,14 @@ var StudySession = /** @class */ (function () {
 // PARENT CLASS 1 — AcademicSession
 var AcademicSession = /** @class */ (function (_super) {
     __extends(AcademicSession, _super);
-    function AcademicSession(subject, icon) {
-        if (icon === void 0) { icon = "📘"; }
-        var _this = _super.call(this, subject) || this;
-        _this.subjectIcon = icon;
-        return _this;
+    function AcademicSession(subject) {
+        return _super.call(this, subject) || this;
     }
-    AcademicSession.prototype.getSubjectIcon = function () {
-        return this.subjectIcon;
-    };
     AcademicSession.prototype.getSessionType = function () {
         return "Academic Session";
     };
     AcademicSession.prototype.getSummary = function () {
         return "Studied ".concat(this.getSubject(), " for ").concat(formatTime(this.getElapsed()), ".");
-    };
-    AcademicSession.prototype.getMotivation = function () {
-        return "Knowledge is the foundation of everything. Keep studying! 📘";
     };
     return AcademicSession;
 }(StudySession));
@@ -148,25 +123,15 @@ var AcademicSession = /** @class */ (function (_super) {
 var SkillSession = /** @class */ (function (_super) {
     __extends(SkillSession, _super);
     function SkillSession(subject, skillLevel) {
-        if (skillLevel === void 0) { skillLevel = "Beginner"; }
         var _this = _super.call(this, subject) || this;
         _this.skillLevel = skillLevel;
         return _this;
     }
-    SkillSession.prototype.getSkillLevel = function () {
-        return this.skillLevel;
-    };
-    SkillSession.prototype.setSkillLevel = function (lvl) {
-        this.skillLevel = lvl;
-    };
     SkillSession.prototype.getSessionType = function () {
         return "Skill Session";
     };
     SkillSession.prototype.getSummary = function () {
         return "Practiced ".concat(this.getSubject(), " (").concat(this.skillLevel, ") for ").concat(formatTime(this.getElapsed()), ".");
-    };
-    SkillSession.prototype.getMotivation = function () {
-        return "Skills are built one rep at a time. Keep practicing! 🎯";
     };
     return SkillSession;
 }(StudySession));
@@ -174,16 +139,15 @@ var SkillSession = /** @class */ (function (_super) {
 var STEMSession = /** @class */ (function (_super) {
     __extends(STEMSession, _super);
     function STEMSession(subject) {
-        var _this = _super.call(this, subject, "🔬") || this;
-        return _this;
+        return _super.call(this, subject) || this;
     }
     STEMSession.prototype.getMotivation = function () {
         var msgs = [
-            "Every equation solved is a victory! 🧪",
-            "STEM minds shape the future. You're doing it! 🚀",
-            "One problem at a time — science works like that! ⚗️",
-            "Numbers never lie. Keep crunching! 📊",
-            "Logic + persistence = mastery. You've got this! 💡",
+            "Every equation solved is a victory! ",
+            "STEM minds shape the future. You're doing it! ",
+            "One problem at a time — science works like that! ",
+            "Numbers never lie. Keep crunching! ",
+            "Logic + persistence = mastery. You've got this! ",
         ];
         return msgs[Math.floor(Math.random() * msgs.length)];
     };
@@ -192,25 +156,16 @@ var STEMSession = /** @class */ (function (_super) {
 // CHILD CLASS 2 — HumanitiesSession
 var HumanitiesSession = /** @class */ (function (_super) {
     __extends(HumanitiesSession, _super);
-    function HumanitiesSession(subject, theme) {
-        if (theme === void 0) { theme = "General"; }
-        var _this = _super.call(this, subject, "📜") || this;
-        _this.theme = theme;
-        return _this;
+    function HumanitiesSession(subject) {
+        return _super.call(this, subject) || this;
     }
-    HumanitiesSession.prototype.getTheme = function () {
-        return this.theme;
-    };
-    HumanitiesSession.prototype.setTheme = function (t) {
-        this.theme = t;
-    };
     HumanitiesSession.prototype.getMotivation = function () {
         var msgs = [
-            "Words and history make us human. Keep reading! 📚",
-            "Every story expands your world! ✨",
-            "Language is power — master it! ✍️",
-            "The past teaches the future — study well! 🏛️",
-            "Great thinkers read. You're becoming one! 🧠",
+            "Words and history make us human. Keep reading! ",
+            "Every story expands your world! ",
+            "Language is power — master it! ",
+            "The past teaches the future — study well! ",
+            "Great thinkers read. You're becoming one! ",
         ];
         return msgs[Math.floor(Math.random() * msgs.length)];
     };
@@ -219,25 +174,16 @@ var HumanitiesSession = /** @class */ (function (_super) {
 // CHILD CLASS 3 — TechnicalSkill
 var TechnicalSkill = /** @class */ (function (_super) {
     __extends(TechnicalSkill, _super);
-    function TechnicalSkill(subject, tool) {
-        if (tool === void 0) { tool = "General"; }
-        var _this = _super.call(this, subject, "Intermediate") || this;
-        _this.tool = tool;
-        return _this;
+    function TechnicalSkill(subject) {
+        return _super.call(this, subject, "Intermediate") || this;
     }
-    TechnicalSkill.prototype.getTool = function () {
-        return this.tool;
-    };
-    TechnicalSkill.prototype.setTool = function (t) {
-        this.tool = t;
-    };
     TechnicalSkill.prototype.getMotivation = function () {
         var msgs = [
-            "Every bug fixed makes you a better dev! 💻",
-            "Code is just logic — and you've got it! ⚡",
-            "Build, break, fix, repeat. That's the craft! 🛠️",
-            "One more function and you'll nail it! 🔧",
-            "Real programmers are made by doing. Keep going! 🖥️",
+            "Every bug fixed makes you a better dev! ",
+            "Code is just logic — and you've got it! ",
+            "Build, break, fix, repeat. That's the craft! ",
+            "One more function and you'll nail it! ",
+            "Real programmers are made by doing. Keep going! ",
         ];
         return msgs[Math.floor(Math.random() * msgs.length)];
     };
@@ -246,25 +192,16 @@ var TechnicalSkill = /** @class */ (function (_super) {
 // CHILD CLASS 4 — CreativeSkill
 var CreativeSkill = /** @class */ (function (_super) {
     __extends(CreativeSkill, _super);
-    function CreativeSkill(subject, medium) {
-        if (medium === void 0) { medium = "Mixed"; }
-        var _this = _super.call(this, subject, "Explorer") || this;
-        _this.medium = medium;
-        return _this;
+    function CreativeSkill(subject) {
+        return _super.call(this, subject, "Explorer") || this;
     }
-    CreativeSkill.prototype.getMedium = function () {
-        return this.medium;
-    };
-    CreativeSkill.prototype.setMedium = function (m) {
-        this.medium = m;
-    };
     CreativeSkill.prototype.getMotivation = function () {
         var msgs = [
-            "Creativity grows when you practice it daily! 🎨",
-            "Every stroke, note, or word is progress! 🎵",
-            "Art is never wasted effort — keep creating! ✨",
-            "Your creative voice is unique. Use it! 🌟",
-            "Inspiration finds those who show up. You did! 🎭",
+            "Creativity grows when you practice it daily! ",
+            "Every stroke, note, or word is progress! ",
+            "Art is never wasted effort — keep creating! ",
+            "Your creative voice is unique. Use it! ",
+            "Inspiration finds those who show up. You did! ",
         ];
         return msgs[Math.floor(Math.random() * msgs.length)];
     };
@@ -310,9 +247,6 @@ var TimerController = /** @class */ (function () {
     TimerController.prototype.bind = function (session) {
         this.session = session;
     };
-    TimerController.prototype.isRunning = function () {
-        return this.running;
-    };
     TimerController.prototype.start = function () {
         var _this = this;
         if (this.running || !this.session)
@@ -347,10 +281,6 @@ var TimerController = /** @class */ (function () {
             this.session.end();
         return this.session ? this.session.getElapsed() : 0;
     };
-    TimerController.prototype.reset = function () {
-        this.stop();
-        this.session = null;
-    };
     return TimerController;
 }());
 // TOAST MANAGER
@@ -360,12 +290,12 @@ var ToastManager = /** @class */ (function () {
     }
     ToastManager.prototype.show = function (message, duration) {
         if (duration === void 0) { duration = 2800; }
-        var el = document.createElement('div');
-        el.className = 'toast';
+        var el = document.createElement("div");
+        el.className = "toast";
         el.textContent = message;
         this.container.appendChild(el);
         setTimeout(function () {
-            el.classList.add('out');
+            el.classList.add("out");
             setTimeout(function () { return el.remove(); }, 350);
         }, duration);
     };
@@ -375,131 +305,154 @@ var ToastManager = /** @class */ (function () {
 function formatTime(seconds) {
     var m = Math.floor(seconds / 60);
     var s = seconds % 60;
-    var mm = m < 10 ? '0' + m : '' + m;
-    var ss = s < 10 ? '0' + s : '' + s;
-    return mm + ':' + ss;
+    var mm = m < 10 ? "0" + m : "" + m;
+    var ss = s < 10 ? "0" + s : "" + s;
+    return mm + ":" + ss;
 }
 function getPerformanceFeedback(seconds) {
     if (seconds < 60)
-        return "Every minute counts! Start stronger next time. 🌱";
+        return "Every minute counts! Start stronger next time. ";
     if (seconds < 300)
-        return "Good start! Try to push for longer sessions! ⚡";
+        return "Good start! Try to push for longer sessions!";
     if (seconds < 600)
-        return "Solid session! You're building momentum! 🔥";
+        return "Solid session! You're building momentum!";
     if (seconds < 1800)
-        return "Great focus! You're doing amazing! 💪";
-    return "Outstanding dedication! You're a study champion! 🏆";
+        return "Great focus! You're doing amazing!";
+    return "Outstanding dedication! You're a study champion!";
 }
 function mapSubjectToClass(subject, type) {
-    var stemSubjects = ['Mathematics', 'Science'];
-    var techSubjects = ['Coding'];
-    var creativeSubjects = ['Drawing', 'Music', 'Writing'];
-    if (type === 'academic') {
+    var stemSubjects = ["Mathematics", "Science"];
+    var techSubjects = ["Coding"];
+    var creativeSubjects = ["Drawing", "Music", "Writing"];
+    if (type === "academic") {
         if (stemSubjects.indexOf(subject) !== -1)
             return new STEMSession(subject);
         return new HumanitiesSession(subject);
     }
     else {
         if (techSubjects.indexOf(subject) !== -1)
-            return new TechnicalSkill(subject, 'Code Editor');
+            return new TechnicalSkill(subject);
         if (creativeSubjects.indexOf(subject) !== -1)
-            return new CreativeSkill(subject, subject);
+            return new CreativeSkill(subject);
         return new TechnicalSkill(subject);
     }
 }
 var manager = new SessionManager();
 var levelSystem = new LevelSystem();
-var toast = new ToastManager('toast-container');
-var currentType = 'academic';
-var selectedSubject = '';
-var motivationPoints = 0;
+var toast = new ToastManager("toast-container");
+var currentType = "academic";
+var selectedSubject = "";
 var timerCtrl = new TimerController(function (elapsed) {
-    var disp = document.getElementById('timer-display');
+    var disp = document.getElementById("timer-display");
     disp.textContent = formatTime(elapsed);
-    disp.classList.add('pulse');
-    setTimeout(function () { return disp.classList.remove('pulse'); }, 500);
+    disp.classList.add("pulse");
+    setTimeout(function () { return disp.classList.remove("pulse"); }, 500);
     updateRing(elapsed);
 }, function (msg) {
-    motivationPoints++;
-    var el = document.getElementById('motivation-msg');
-    el.style.opacity = '0';
+    var el = document.getElementById("motivation-msg");
+    el.style.opacity = "0";
     setTimeout(function () {
         el.textContent = msg;
-        el.style.opacity = '1';
-        toast.show('💬 ' + msg, 4000);
+        el.style.opacity = "1";
+        toast.show("💬 " + msg, 4000);
     }, 400);
 });
 // SCREEN NAVIGATION
 function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(function (s) { return s.classList.remove('active'); });
-    document.getElementById(id).classList.add('active');
+    document
+        .querySelectorAll(".screen")
+        .forEach(function (s) { return s.classList.remove("active"); });
+    document.getElementById(id).classList.add("active");
 }
-function showHome() { showScreen('screen-home'); updateHomeUI(); }
-function showSetup() { resetSetup(); showScreen('screen-setup'); }
-function showHistory() { renderHistory(); showScreen('screen-history'); }
-function hideUML() { showHome(); }
+function showHome() {
+    showScreen("screen-home");
+    updateHomeUI();
+}
+function showSetup() {
+    resetSetup();
+    showScreen("screen-setup");
+}
+function showHistory() {
+    renderHistory();
+    showScreen("screen-history");
+}
 // HOME UI
 function updateHomeUI() {
     var count = manager.getCount();
     var total = manager.getTotalTime();
-    var el = document.getElementById('streak-text');
-    el.textContent = count === 0
-        ? "Start your first session today!"
-        : "".concat(count, " session").concat(count > 1 ? 's' : '', " completed \u00B7 ").concat(formatTime(total), " total time");
+    var el = document.getElementById("streak-text");
+    el.textContent =
+        count === 0
+            ? "Start your first session today!"
+            : "".concat(count, " session").concat(count > 1 ? "s" : "", " completed \u00B7 ").concat(formatTime(total), " total time");
     updateLevelUI();
 }
 function updateLevelUI() {
     var pct = levelSystem.getProgressPercent();
     var lv = levelSystem.getLevel();
-    var icon = levelSystem.getLevelIcon();
     var title = levelSystem.getLevelTitle();
     var xp = levelSystem.getXP();
     var next = levelSystem.getNextLevelXP();
-    var levelBadgeEl = document.getElementById('level-badge');
-    var levelBarEl = document.getElementById('level-bar');
-    var levelXpEl = document.getElementById('level-xp');
+    var levelBadgeEl = document.getElementById("level-badge");
+    var levelBarEl = document.getElementById("level-bar");
+    var levelXpEl = document.getElementById("level-xp");
     if (levelBadgeEl)
-        levelBadgeEl.textContent = "".concat(icon, " Lv.").concat(lv, " ").concat(title);
+        levelBadgeEl.textContent = "Lv.".concat(lv, " ").concat(title);
     if (levelBarEl)
-        levelBarEl.style.width = pct + '%';
+        levelBarEl.style.width = pct + "%";
     if (levelXpEl)
         levelXpEl.textContent = "".concat(xp, " / ").concat(next, " XP");
-    var navPill = document.getElementById('nav-level-pill');
+    var navPill = document.getElementById("nav-level-pill");
     if (navPill)
-        navPill.textContent = "".concat(icon, " Lv.").concat(lv, " ").concat(title);
+        navPill.textContent = "Lv.".concat(lv, " ").concat(title);
 }
 // SETUP SCREEN
 function switchType(type) {
     currentType = type;
-    selectedSubject = '';
-    document.querySelectorAll('.subject-btn').forEach(function (b) { return b.classList.remove('selected'); });
-    document.getElementById('custom-subject').value = '';
-    document.getElementById('start-btn').disabled = true;
-    document.getElementById('tab-academic').classList.toggle('active', type === 'academic');
-    document.getElementById('tab-skill').classList.toggle('active', type === 'skill');
-    document.getElementById('academic-subjects').style.display = type === 'academic' ? 'grid' : 'none';
-    document.getElementById('skill-subjects').style.display = type === 'skill' ? 'grid' : 'none';
+    selectedSubject = "";
+    document
+        .querySelectorAll(".subject-btn")
+        .forEach(function (b) { return b.classList.remove("selected"); });
+    document.getElementById("custom-subject").value = "";
+    document.getElementById("start-btn").disabled = true;
+    document
+        .getElementById("tab-academic")
+        .classList.toggle("active", type === "academic");
+    document
+        .getElementById("tab-skill")
+        .classList.toggle("active", type === "skill");
+    document.getElementById("academic-subjects").style.display =
+        type === "academic" ? "grid" : "none";
+    document.getElementById("skill-subjects").style.display =
+        type === "skill" ? "grid" : "none";
 }
 function selectSubject(btn, name) {
-    document.querySelectorAll('.subject-btn').forEach(function (b) { return b.classList.remove('selected'); });
-    btn.classList.add('selected');
+    document
+        .querySelectorAll(".subject-btn")
+        .forEach(function (b) { return b.classList.remove("selected"); });
+    btn.classList.add("selected");
     selectedSubject = name;
-    document.getElementById('custom-subject').value = '';
-    document.getElementById('start-btn').disabled = false;
+    document.getElementById("custom-subject").value = "";
+    document.getElementById("start-btn").disabled = false;
 }
 function onCustomInput() {
-    var val = document.getElementById('custom-subject').value.trim();
-    document.querySelectorAll('.subject-btn').forEach(function (b) { return b.classList.remove('selected'); });
+    var val = document.getElementById("custom-subject").value.trim();
+    document
+        .querySelectorAll(".subject-btn")
+        .forEach(function (b) { return b.classList.remove("selected"); });
     selectedSubject = val;
-    document.getElementById('start-btn').disabled = val.length === 0;
+    document.getElementById("start-btn").disabled =
+        val.length === 0;
 }
 function resetSetup() {
-    selectedSubject = '';
-    currentType = 'academic';
-    document.querySelectorAll('.subject-btn').forEach(function (b) { return b.classList.remove('selected'); });
-    document.getElementById('custom-subject').value = '';
-    document.getElementById('start-btn').disabled = true;
-    switchType('academic');
+    selectedSubject = "";
+    currentType = "academic";
+    document
+        .querySelectorAll(".subject-btn")
+        .forEach(function (b) { return b.classList.remove("selected"); });
+    document.getElementById("custom-subject").value = "";
+    document.getElementById("start-btn").disabled = true;
+    switchType("academic");
 }
 function startSession() {
     if (!selectedSubject)
@@ -508,35 +461,38 @@ function startSession() {
     var session = mapSubjectToClass(selectedSubject, currentType);
     manager.addSession(session);
     timerCtrl.bind(session);
-    motivationPoints = 0;
     // Populate timer screen
-    document.getElementById('timer-subject').textContent = session.getSubject();
-    document.getElementById('timer-type').textContent = session.getSessionType();
-    document.getElementById('timer-display').textContent = '00:00';
-    document.getElementById('ring-fg').style.strokeDashoffset = '565.49';
-    document.getElementById('motivation-msg').textContent = '';
+    document.getElementById("timer-subject").textContent =
+        session.getSubject();
+    document.getElementById("timer-type").textContent =
+        session.getSessionType();
+    document.getElementById("timer-display").textContent =
+        "00:00";
+    document.getElementById("ring-fg").style.strokeDashoffset = "565.49";
+    document.getElementById("motivation-msg").textContent = "";
     setTimerBtns(false, true, true);
-    updateBadge('idle');
-    showScreen('screen-timer');
+    updateBadge("idle");
+    showScreen("screen-timer");
     toast.show("Let's go! 💪 Session ready.");
 }
 // TIMER SCREEN
 function timerStart() {
     timerCtrl.start();
     setTimerBtns(true, false, false);
-    updateBadge('running');
+    updateBadge("running");
     var session = manager.getActive();
     if (session) {
         var msg = session.getMotivation(); // POLYMORPHISM here
-        document.getElementById('motivation-msg').textContent = msg;
-        toast.show('✨ ' + msg, 3500);
+        document.getElementById("motivation-msg").textContent =
+            msg;
+        toast.show("✨ " + msg, 3500);
     }
 }
 function timerPause() {
     timerCtrl.pause();
     setTimerBtns(false, false, false);
-    updateBadge('paused');
-    toast.show('⏸ Paused — take a breath!');
+    updateBadge("paused");
+    toast.show("⏸ Paused — take a breath!");
 }
 function endSession() {
     var elapsed = timerCtrl.stop();
@@ -547,50 +503,66 @@ function endSession() {
     var leveledUp = levelSystem.addXP(elapsed);
     manager.finishActive();
     // Populate summary
-    document.getElementById('sum-subject').textContent = session.getSubject();
-    document.getElementById('sum-type').textContent = session.getSessionType();
-    document.getElementById('sum-time').textContent = formatTime(elapsed);
-    document.getElementById('sum-points').textContent = "+".concat(Math.floor(elapsed / 10), " XP earned");
-    document.getElementById('sum-xp-total').textContent = "Total XP: ".concat(levelSystem.getXP());
-    document.getElementById('sum-level').textContent = "".concat(levelSystem.getLevelIcon(), " Lv.").concat(levelSystem.getLevel(), " \u2014 ").concat(levelSystem.getLevelTitle());
-    document.getElementById('sum-feedback').textContent = getPerformanceFeedback(elapsed);
-    document.getElementById('sum-summary').textContent = session.getSummary();
-    showScreen('screen-summary');
+    document.getElementById("sum-subject").textContent =
+        session.getSubject();
+    document.getElementById("sum-type").textContent =
+        session.getSessionType();
+    document.getElementById("sum-time").textContent =
+        formatTime(elapsed);
+    document.getElementById("sum-points").textContent =
+        "+".concat(Math.floor(elapsed / 10), " XP earned");
+    document.getElementById("sum-xp-total").textContent =
+        "Total XP: ".concat(levelSystem.getXP());
+    document.getElementById("sum-level").textContent =
+        "Lv.".concat(levelSystem.getLevel(), " \u2014 ").concat(levelSystem.getLevelTitle());
+    document.getElementById("sum-feedback").textContent =
+        getPerformanceFeedback(elapsed);
+    document.getElementById("sum-summary").textContent =
+        session.getSummary();
+    showScreen("screen-summary");
     if (leveledUp !== -1) {
-        setTimeout(function () { return toast.show("\uD83C\uDF89 LEVEL UP! You're now Lv.".concat(leveledUp, " ").concat(levelSystem.getLevelTitle(), "!"), 5000); }, 600);
+        setTimeout(function () {
+            return toast.show("\uD83C\uDF89 LEVEL UP! You're now Lv.".concat(leveledUp, " ").concat(levelSystem.getLevelTitle(), "!"), 5000);
+        }, 600);
     }
     else {
-        toast.show('✅ Session saved! Great work!', 3000);
+        toast.show("✅ Session saved! Great work!", 3000);
     }
 }
 function setTimerBtns(startDis, pauseDis, endDis) {
-    document.getElementById('btn-start').disabled = startDis;
-    document.getElementById('btn-pause').disabled = pauseDis;
-    document.getElementById('btn-end').disabled = endDis;
+    document.getElementById("btn-start").disabled =
+        startDis;
+    document.getElementById("btn-pause").disabled =
+        pauseDis;
+    document.getElementById("btn-end").disabled = endDis;
 }
 function updateBadge(state) {
-    var badge = document.getElementById('status-badge');
-    var labels = { idle: 'Idle', running: 'Running', paused: 'Paused' };
+    var badge = document.getElementById("status-badge");
+    var labels = {
+        idle: "Idle",
+        running: "Running",
+        paused: "Paused",
+    };
     badge.className = "status-badge ".concat(state);
-    badge.innerHTML = "<span class=\"dot".concat(state === 'running' ? ' blink' : '', "\"></span> ").concat(labels[state]);
+    badge.innerHTML = "<span class=\"dot".concat(state === "running" ? " blink" : "", "\"></span> ").concat(labels[state]);
 }
 function updateRing(elapsed) {
-    var ring = document.getElementById('ring-fg');
+    var ring = document.getElementById("ring-fg");
     var max = 565.49; // 2 * PI * 90
     var offset = max - Math.min((elapsed / 3600) * max, max);
     ring.style.strokeDashoffset = String(offset);
 }
 // HISTORY SCREEN
 function renderHistory() {
-    var list = document.getElementById('history-list');
+    var list = document.getElementById("history-list");
     var sessions = manager.getHistory().reverse();
     if (sessions.length === 0) {
-        list.innerHTML = '<div class="empty-state">No sessions yet. Start studying! 📚</div>';
+        list.innerHTML =
+            '<div class="empty-state">No sessions yet. Start studying! 📚</div>';
         return;
     }
-    list.innerHTML = sessions.map(function (s) { return "\n    <div class=\"history-item\">\n      <div class=\"history-item-left\">\n        <div class=\"history-item-subject\">".concat(s.getSubject(), "</div>\n        <div class=\"history-item-type\">").concat(s.getSessionType(), "</div>\n      </div>\n      <div class=\"history-item-time\">").concat(formatTime(s.getElapsed()), "</div>\n    </div>\n  "); }).join('');
+    list.innerHTML = sessions
+        .map(function (s) { return "\n    <div class=\"history-item\">\n      <div class=\"history-item-left\">\n        <div class=\"history-item-subject\">".concat(s.getSubject(), "</div>\n        <div class=\"history-item-type\">").concat(s.getSessionType(), "</div>\n      </div>\n      <div class=\"history-item-time\">").concat(formatTime(s.getElapsed()), "</div>\n    </div>\n  "); })
+        .join("");
 }
-// INIT
-(function init() {
-    showHome();
-})(); 
+showHome();

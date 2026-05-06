@@ -71,10 +71,6 @@ class LevelSystem implements ILevelable {
     return newLevel > prevLevel ? newLevel : -1; // returns new level if leveled up
   }
 
-  // Setters
-  setXP(val: number): void {
-    this.xp = val;
-  }
 }
 
 // ABSTRACT CLASS — StudySession
@@ -98,19 +94,10 @@ abstract class StudySession implements ISession {
   getElapsed(): number {
     return this.elapsedSeconds;
   }
-  getStartTime(): Date | null {
-    return this.startTime;
-  }
-  getEndTime(): Date | null {
-    return this.endTime;
-  }
 
   // Setters
   setElapsed(s: number): void {
     this.elapsedSeconds = s;
-  }
-  setSubject(s: string): void {
-    this.subject = s;
   }
 
   // Concrete methods (shared behavior)
@@ -128,16 +115,9 @@ abstract class StudySession implements ISession {
 }
 
 // PARENT CLASS 1 — AcademicSession
-class AcademicSession extends StudySession {
-  private subjectIcon: string;
-
-  constructor(subject: string, icon: string = "📘") {
+abstract class AcademicSession extends StudySession {
+  constructor(subject: string) {
     super(subject);
-    this.subjectIcon = icon;
-  }
-
-  getSubjectIcon(): string {
-    return this.subjectIcon;
   }
 
   getSessionType(): string {
@@ -148,25 +128,15 @@ class AcademicSession extends StudySession {
     return `Studied ${this.getSubject()} for ${formatTime(this.getElapsed())}.`;
   }
 
-  getMotivation(): string {
-    return "Knowledge is the foundation of everything. Keep studying! 📘";
-  }
 }
 
 // PARENT CLASS 2 — SkillSession
-class SkillSession extends StudySession {
+abstract class SkillSession extends StudySession {
   private skillLevel: string; // ENCAPSULATION: private
 
-  constructor(subject: string, skillLevel: string = "Beginner") {
+  constructor(subject: string, skillLevel: string) {
     super(subject);
     this.skillLevel = skillLevel;
-  }
-
-  getSkillLevel(): string {
-    return this.skillLevel;
-  }
-  setSkillLevel(lvl: string): void {
-    this.skillLevel = lvl;
   }
 
   getSessionType(): string {
@@ -177,15 +147,12 @@ class SkillSession extends StudySession {
     return `Practiced ${this.getSubject()} (${this.skillLevel}) for ${formatTime(this.getElapsed())}.`;
   }
 
-  getMotivation(): string {
-    return "Skills are built one rep at a time. Keep practicing!";
-  }
 }
 
 // CHILD CLASS 1 — STEMSession
 class STEMSession extends AcademicSession {
   constructor(subject: string) {
-    super(subject, "🔬");
+    super(subject);
   }
 
   getMotivation(): string {
@@ -202,18 +169,8 @@ class STEMSession extends AcademicSession {
 
 // CHILD CLASS 2 — HumanitiesSession
 class HumanitiesSession extends AcademicSession {
-  private theme: string;
-
-  constructor(subject: string, theme: string = "General") {
-    super(subject, "📜");
-    this.theme = theme;
-  }
-
-  getTheme(): string {
-    return this.theme;
-  }
-  setTheme(t: string): void {
-    this.theme = t;
+  constructor(subject: string) {
+    super(subject);
   }
 
   getMotivation(): string {
@@ -230,18 +187,8 @@ class HumanitiesSession extends AcademicSession {
 
 // CHILD CLASS 3 — TechnicalSkill
 class TechnicalSkill extends SkillSession {
-  private tool: string;
-
-  constructor(subject: string, tool: string = "General") {
+  constructor(subject: string) {
     super(subject, "Intermediate");
-    this.tool = tool;
-  }
-
-  getTool(): string {
-    return this.tool;
-  }
-  setTool(t: string): void {
-    this.tool = t;
   }
 
   getMotivation(): string {
@@ -258,18 +205,8 @@ class TechnicalSkill extends SkillSession {
 
 // CHILD CLASS 4 — CreativeSkill
 class CreativeSkill extends SkillSession {
-  private medium: string;
-
-  constructor(subject: string, medium: string = "Mixed") {
+  constructor(subject: string) {
     super(subject, "Explorer");
-    this.medium = medium;
-  }
-
-  getMedium(): string {
-    return this.medium;
-  }
-  setMedium(m: string): void {
-    this.medium = m;
   }
 
   getMotivation(): string {
@@ -341,9 +278,6 @@ class TimerController {
   bind(session: StudySession): void {
     this.session = session;
   }
-  isRunning(): boolean {
-    return this.running;
-  }
 
   start(): void {
     if (this.running || !this.session) return;
@@ -376,10 +310,6 @@ class TimerController {
     return this.session ? this.session.getElapsed() : 0;
   }
 
-  reset(): void {
-    this.stop();
-    this.session = null;
-  }
 }
 
 // TOAST MANAGER
@@ -429,9 +359,9 @@ function mapSubjectToClass(subject: string, type: string): StudySession {
     return new HumanitiesSession(subject);
   } else {
     if (techSubjects.indexOf(subject) !== -1)
-      return new TechnicalSkill(subject, "Code Editor");
+      return new TechnicalSkill(subject);
     if (creativeSubjects.indexOf(subject) !== -1)
-      return new CreativeSkill(subject, subject);
+      return new CreativeSkill(subject);
     return new TechnicalSkill(subject);
   }
 }
@@ -442,8 +372,6 @@ const toast = new ToastManager("toast-container");
 
 let currentType: string = "academic";
 let selectedSubject: string = "";
-let motivationPoints: number = 0;
-
 const timerCtrl = new TimerController(
   (elapsed: number) => {
     const disp = document.getElementById("timer-display")!;
@@ -454,7 +382,6 @@ const timerCtrl = new TimerController(
   },
 
   (msg: string) => {
-    motivationPoints++;
     const el = document.getElementById("motivation-msg")!;
     el.style.opacity = "0";
     setTimeout(() => {
@@ -484,9 +411,6 @@ function showSetup(): void {
 function showHistory(): void {
   renderHistory();
   showScreen("screen-history");
-}
-function hideUML(): void {
-  showHome();
 }
 
 // HOME UI
@@ -580,7 +504,6 @@ function startSession(): void {
   const session = mapSubjectToClass(selectedSubject, currentType);
   manager.addSession(session);
   timerCtrl.bind(session);
-  motivationPoints = 0;
 
   // Populate timer screen
   (document.getElementById("timer-subject") as HTMLElement).textContent =
