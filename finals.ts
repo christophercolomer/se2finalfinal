@@ -184,18 +184,8 @@ class SkillSession extends StudySession {
 
 // CHILD CLASS 1 — STEMSession
 class STEMSession extends AcademicSession {
-  private difficulty: string;
-
-  constructor(subject: string, difficulty: string = "Medium") {
+  constructor(subject: string) {
     super(subject, "🔬");
-    this.difficulty = difficulty;
-  }
-
-  getDifficulty(): string {
-    return this.difficulty;
-  }
-  setDifficulty(d: string): void {
-    this.difficulty = d;
   }
 
   getMotivation(): string {

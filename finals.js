@@ -173,18 +173,10 @@ var SkillSession = /** @class */ (function (_super) {
 // CHILD CLASS 1 — STEMSession
 var STEMSession = /** @class */ (function (_super) {
     __extends(STEMSession, _super);
-    function STEMSession(subject, difficulty) {
-        if (difficulty === void 0) { difficulty = "Medium"; }
+    function STEMSession(subject) {
         var _this = _super.call(this, subject, "🔬") || this;
-        _this.difficulty = difficulty;
         return _this;
     }
-    STEMSession.prototype.getDifficulty = function () {
-        return this.difficulty;
-    };
-    STEMSession.prototype.setDifficulty = function (d) {
-        this.difficulty = d;
-    };
     STEMSession.prototype.getMotivation = function () {
         var msgs = [
             "Every equation solved is a victory! 🧪",
