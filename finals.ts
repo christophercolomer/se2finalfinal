@@ -350,7 +350,7 @@ function getPerformanceFeedback(seconds: number): string {
 }
 
 function mapSubjectToClass(subject: string, type: string): StudySession {
-  const stemSubjects = ["Mathematics", "Science"];
+  const stemSubjects = ["Calculus", "Biology"];
   const techSubjects = ["Coding"];
   const creativeSubjects = ["Drawing", "Music", "Writing"];
 

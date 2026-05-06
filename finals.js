@@ -321,7 +321,7 @@ function getPerformanceFeedback(seconds) {
     return "Outstanding dedication! You're a study champion!";
 }
 function mapSubjectToClass(subject, type) {
-    var stemSubjects = ["Mathematics", "Science"];
+    var stemSubjects = ["Calculus", "Biology"];
     var techSubjects = ["Coding"];
     var creativeSubjects = ["Drawing", "Music", "Writing"];
     if (type === "academic") {
