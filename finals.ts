@@ -64,7 +64,7 @@ class LevelSystem implements IProficiency {
   }
 
   addXP(seconds: number): number {
-    const gained = Math.floor(seconds / 60); // 1 XP per 10 seconds
+    const gained = Math.floor(seconds / 60); // 1 XP per minute
     const prevLevel = this.getLevel();
     this.xp += gained;
     const newLevel = this.getLevel();
@@ -561,7 +561,7 @@ function endSession(): void {
   (document.getElementById("sum-time") as HTMLElement).textContent =
     formatTime(elapsed);
   (document.getElementById("sum-points") as HTMLElement).textContent =
-    `+${Math.floor(elapsed / 10)} XP earned`;
+    `+${Math.floor(elapsed / 60)} XP earned`;
   (document.getElementById("sum-xp-total") as HTMLElement).textContent =
     `Total XP: ${levelSystem.getXP()}`;
   (document.getElementById("sum-level") as HTMLElement).textContent =

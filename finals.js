@@ -60,7 +60,7 @@ var LevelSystem = /** @class */ (function () {
         return Math.min(100, Math.round(((this.xp - prev) / (next - prev)) * 100));
     };
     LevelSystem.prototype.addXP = function (seconds) {
-        var gained = Math.floor(seconds / 60); // 1 XP per 10 seconds
+        var gained = Math.floor(seconds / 60); // 1 XP per minute
         var prevLevel = this.getLevel();
         this.xp += gained;
         var newLevel = this.getLevel();
@@ -510,7 +510,7 @@ function endSession() {
     document.getElementById("sum-time").textContent =
         formatTime(elapsed);
     document.getElementById("sum-points").textContent =
-        "+".concat(Math.floor(elapsed / 10), " XP earned");
+        "+".concat(Math.floor(elapsed / 60), " XP earned");
     document.getElementById("sum-xp-total").textContent =
         "Total XP: ".concat(levelSystem.getXP());
     document.getElementById("sum-level").textContent =
