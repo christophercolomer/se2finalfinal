@@ -497,15 +497,14 @@ function resetSetup(): void {
   switchType("academic");
 }
 
-function startSession(): void {
-  if (!selectedSubject) return;
-
-  // gacreate correct OOP subclass — Polymorphism in act
-  const session = mapSubjectToClass(selectedSubject, currentType);
+function createAndBindSession(subject: string, type: string): StudySession {
+  const session = mapSubjectToClass(subject, type);
   manager.addSession(session);
   timerCtrl.bind(session);
+  return session;
+}
 
-  // Populate timer screen
+function renderTimerScreen(session: StudySession): void {
   (document.getElementById("timer-subject") as HTMLElement).textContent =
     session.getSubject();
   (document.getElementById("timer-type") as HTMLElement).textContent =
@@ -523,37 +522,11 @@ function startSession(): void {
   toast.show("Let's go! 💪 Session ready.");
 }
 
-// TIMER SCREEN
-function timerStart(): void {
-  timerCtrl.start();
-  setTimerBtns(true, false, false);
-  updateBadge("running");
-  const session = manager.getActive();
-  if (session) {
-    const msg = session.getMotivation(); // POLYMORPHISM here
-    (document.getElementById("motivation-msg") as HTMLElement).textContent =
-      msg;
-    toast.show("✨ " + msg, 3500);
-  }
-}
-
-function timerPause(): void {
-  timerCtrl.pause();
-  setTimerBtns(false, false, false);
-  updateBadge("paused");
-  toast.show("⏸ Paused — take a breath!");
-}
-
-function endSession(): void {
-  const elapsed = timerCtrl.stop();
-  const session = manager.getActive();
-  if (!session) return;
-
-  // Award XP (Level system)
-  const leveledUp = levelSystem.addXP(elapsed);
-  manager.finishActive();
-
-  // Populate summary
+function renderSummaryScreen(
+  session: StudySession,
+  elapsed: number,
+  leveledUp: number,
+): void {
   (document.getElementById("sum-subject") as HTMLElement).textContent =
     session.getSubject();
   (document.getElementById("sum-type") as HTMLElement).textContent =
@@ -585,6 +558,45 @@ function endSession(): void {
   } else {
     toast.show("✅ Session saved! Great work!", 3000);
   }
+}
+
+function startSession(): void {
+  if (!selectedSubject) return;
+
+  const session = createAndBindSession(selectedSubject, currentType);
+  renderTimerScreen(session);
+}
+
+// TIMER SCREEN
+function timerStart(): void {
+  timerCtrl.start();
+  setTimerBtns(true, false, false);
+  updateBadge("running");
+  const session = manager.getActive();
+  if (session) {
+    const msg = session.getMotivation(); // POLYMORPHISM here
+    (document.getElementById("motivation-msg") as HTMLElement).textContent =
+      msg;
+    toast.show("✨ " + msg, 3500);
+  }
+}
+
+function timerPause(): void {
+  timerCtrl.pause();
+  setTimerBtns(false, false, false);
+  updateBadge("paused");
+  toast.show("⏸ Paused — take a breath!");
+}
+
+function endSession(): void {
+  const elapsed = timerCtrl.stop();
+  const session = manager.getActive();
+  if (!session) return;
+
+  const leveledUp = levelSystem.addXP(elapsed);
+  manager.finishActive();
+
+  renderSummaryScreen(session, elapsed, leveledUp);
 }
 
 function setTimerBtns(
